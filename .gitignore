@@ -1,0 +1,21 @@
+data_sets/
+
+# non-binary file types
+*.dta
+*.log
+*.pdf
+*.aux
+*.synctex.gz
+*.lot
+*.gz
+*.aux
+*.tex
+*.pdf
+*.log
+*.Rout
+*.Rdata
+*.xlsx
+*.rid
+*.csv
+*.xls
+*.lnk
