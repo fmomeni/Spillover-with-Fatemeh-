@@ -1,0 +1,17 @@
+Multiple Treatment Assignment Variables
+
+C - assigned to control once
+CC - assigned to control twice
+CT - assigned to control and then to treatment other than kinderprep
+CK- assigned to control and then to kinderprep
+T - assigned to treatment once other than kinderprep
+TT - assigned to treatment twice (both treatments different from kinderprep)
+TTT - assigned to treatment three times (all treatments different from kinderprep)
+TK - assigned to treatment different from kinderprep and then assigned to kinderprep
+K - assigned to kinderprep once
+
+CT_pretreat = 1 if CT == 1 AND observation occurs before a subject receives treatment (different from kinderprep)
+CK_pretreat = 1 if CK == 1 AND observation occurs before a subject receives kinderprep
+
+first_random - first year of randomisation type of treatment observation
+second_random - second year of randomisation type of treatment observation
