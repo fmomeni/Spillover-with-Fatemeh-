@@ -1,1 +1,2 @@
-
+"run_directory.do" runs the code in the "code" subfolder that conducts the analysis and generates the .tex tables
+in the "tables" subfolder.
