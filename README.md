@@ -5,3 +5,7 @@ Before running the "run_project" do file, make sure you change to the directory 
 
 The "data" folder is empty. When cloning the repository to the local computer, the user should include the raw data files in the "pre_made" subfolder of the "data" folder.
 
+"Variable_dictionary" contains explanations for the treatment assignment variables used in the analysis.
+
+
+
