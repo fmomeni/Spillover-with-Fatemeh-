@@ -23,9 +23,6 @@ drop if (test == "ao_y5" | test == "ao_y6")
 **Dropping observations without std cog and std_ncog
 drop if has_cog_==0 & has_ncog_ ==0
  
-**Dropping pre observations
-drop if test =="pre"
- 
 **Saving file for Tables 3 and 4
 merge m:1 child year using pre_scores
 

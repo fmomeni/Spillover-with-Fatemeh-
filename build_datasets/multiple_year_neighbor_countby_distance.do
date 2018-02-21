@@ -7,7 +7,7 @@ cd "$repository/data_sets/generated"
 use neighbor_count_by_oriassessments_dummies_Fatemeh_all_years
 
 *set radii
-local distance " 500 1000 5000 10000 15000 20000" 
+local distance " 500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000" 
 
 foreach d of local distance {
 

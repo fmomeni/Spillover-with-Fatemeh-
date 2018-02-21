@@ -28,7 +28,7 @@ save neighbor_dummies_race_gender, replace
 
 
 **Create Neighbors by Distance Male Neighbors 
-local distance "500 1000 5000 10000 15000 20000"
+local distance "500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000"
 
 	foreach d of local distance {
 	
@@ -65,7 +65,7 @@ local distance "500 1000 5000 10000 15000 20000"
 }
 
 **Create Neighbors by Distance Missing Gender Neighbors
-local distance "500 1000 5000 10000 15000 20000"
+local distance "500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000"
 
 	foreach d of local distance {
 	
@@ -102,7 +102,7 @@ local distance "500 1000 5000 10000 15000 20000"
 }
 
 **Create Neighbors by Distance Female Neighbors
-local distance "500 1000 5000 10000 15000 20000"
+local distance "500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000"
 
 	foreach d of local distance {
 	
@@ -140,7 +140,7 @@ local distance "500 1000 5000 10000 15000 20000"
 
 **Create Neighbors by Distance Black Neighbors
 
-local distance "500 1000 5000 10000 15000 20000"
+local distance "500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000"
 
 	foreach d of local distance {
 	
@@ -178,7 +178,7 @@ local distance "500 1000 5000 10000 15000 20000"
 
 **Create Neighbors by Distance Hispanic Neighbors
 
-local distance "500 1000 5000 10000 15000 20000"
+local distance "500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000"
 
 	foreach d of local distance {
 	
@@ -216,7 +216,7 @@ local distance "500 1000 5000 10000 15000 20000"
 
 **Create Neighbors by Distance Other Race Neighbors
 
-local distance "500 1000 5000 10000 15000 20000"
+local distance "500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000"
 
 	foreach d of local distance {
 	
@@ -254,7 +254,7 @@ local distance "500 1000 5000 10000 15000 20000"
 
 **Create Neighbors by Distance Missing Race Neighbors
 
-local distance "500 1000 5000 10000 15000 20000"
+local distance "500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000"
 
 	foreach d of local distance {
 	
@@ -292,7 +292,7 @@ local distance "500 1000 5000 10000 15000 20000"
 
 **Create Neighbors by Distance White Non-Hispanic Race Neighbors
 
-local distance "500 1000 5000 10000 15000 20000"
+local distance "500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000"
 
 	foreach d of local distance {
 	
@@ -338,7 +338,7 @@ clear all
 cd "$repository/data_sets/generated"
 use neighbors_`name'_circle_500
 
-foreach x in 1000 5000 10000 15000 20000 {
+foreach x in 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000 {
 merge 1:1 origin_gecc_id test randomization_ori using neighbors_`name'_circle_`x'
 drop _merge
 }

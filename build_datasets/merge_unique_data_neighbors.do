@@ -15,7 +15,7 @@ keep if _merge == 3
 **smaller than 20,000
 
 drop _merge
-foreach distance in 500 1000 5000 10000 15000 20000 {
+foreach distance in 500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000 {
 gen percent_treated_`distance' = (treated_`distance' / (treated_`distance' + control_`distance'))*100
 }
 
