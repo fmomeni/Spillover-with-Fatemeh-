@@ -10,9 +10,9 @@ use table34_unique_data_clean
 ***********************************************************************************
 **If want to reproduce table restricting sample to control kids, add the code below
 
-/*
+
 keep if (C == 1 & first_random == 1) | (CC == 1 & first_random == 1) | (CT_pretreat == 1) | (CK_prekinder == 1)
-*/
+
 
 ***********************************************************************************
 
@@ -111,12 +111,10 @@ file close file11
 **Merging with distance to school and block group variable
 foreach file in Relevant_DistToSchool_1 Relevant_DistToSchool_2 Relevant_censusblock_checc {
 merge m:1 child using `file'
-drop if _merge == 2
+*drop if _merge == 2
 drop _merge
 } 
 
-**For the regression, drop observations that had no pre scores 
-drop if (no_cog_pre == 1 | no_ncog_pre == 1)
 	
 replace age_pre = . if age_pre == 0	
 
@@ -196,7 +194,7 @@ foreach d of local ring  {
 		local j = `j' + 1 
 
 	***FIXED EFFECTS
-	quietly xtreg std_`assess' treated_`d' total_neigh_`d' std_cog_pre std_ncog_pre distto1 distto2 i.gender_num i.race_num i.year i.blockgroup_num i.test_num age_pre if has_`assess' == 1, fe cluster(child) 
+	quietly xtreg std_`assess' treated_`d' total_neigh_`d' i.test_num if has_`assess' == 1, fe cluster(child) 
 	
 	matrix d = r(table) 
 
