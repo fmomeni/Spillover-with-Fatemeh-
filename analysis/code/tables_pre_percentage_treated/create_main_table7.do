@@ -10,14 +10,12 @@ use table56_unique_data_clean
 ***********************************************************************************
 **If want to reproduce table restricting sample to control kids, add the code below
 
-/*
+
 keep if (C == 1 & first_random == 1) | (CC == 1 & first_random == 1) | (CT_pretreat == 1) | (CK_prekinder == 1)
-*/
+
 
 ***********************************************************************************
 
-**For the regression, drop observations that had no pre scores 
-drop if (no_cog_pre == 1 | no_ncog_pre == 1)
 	
 replace age_pre = . if age_pre == 0	
 
@@ -73,7 +71,7 @@ foreach d of local distance  {
 	foreach assess in cog ncog {
 
 	***FIXED EFFECTS
-	quietly xtreg std_`assess' percent_treated_`d' std_cog_pre std_ncog_pre distto1 distto2 i.gender_num i.race_num i.year i.blockgroup_num i.test_num age_pre if has_`assess' == 1, fe cluster(child) 
+	quietly xtreg std_`assess' percent_treated_`d' i.test_num if has_`assess' == 1, fe cluster(child) 
 	
 	matrix d = r(table) 
 

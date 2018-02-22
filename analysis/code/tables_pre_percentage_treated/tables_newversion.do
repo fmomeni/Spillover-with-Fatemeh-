@@ -186,9 +186,6 @@ order has_wjl_* has_wjs_* has_wja_* has_wjq_* has_card_* has_ppvt_* has_psra_* h
 
 reshape long has_wjl_@ has_wjs_@ has_wja_@ has_wjq_@ wjl_@ wjs_@ wja_@ wjq_@ has_card_@ card_@ has_ppvt_@ ppvt_@ has_psra_@ psra_@ has_ospan_@ ospan_@ has_same_@ same_@ has_spatial_@ spatial_@ std_ppvt_@ std_wjl_@ std_wja_@ std_wjs_@ std_wjq_@ std_psra_@ std_card_@ std_spatial_@ std_ospan_@ std_same_@  has_cog_@ cog_@ std_cog_@ has_ncog_@ ncog_@ std_ncog_@, i(child year) j(test) s
 	
-**Dropping those kids that have no pre cog/ncog scores or do not have any other
-**observation beyond pre	
-drop if (num_cog_beyond_pre == 0 & num_ncog_beyond_pre == 0)
 
 **Dropping all observations for ao_y5, ao_y6
 drop if (test == "ao_y5" | test == "ao_y6")
@@ -221,14 +218,14 @@ unique child
 **Create CT_pretreatment which is only defined for those who have been randomised twice: first into control and than into treatment (other than kinderprep). 
 **"1" means that the kid has taken this test before undergoing treatment 
 gen CT_pretreat = .
-replace CT_pretreat = 1 if CT == 1 & first_random == 1 & (test == "mid" | test == "post" | test == "sl")
+replace CT_pretreat = 1 if CT == 1 & first_random == 1 & (test == "pre" | test == "mid" | test == "post" | test == "sl")
 replace CT_pretreat = 0 if CT == 1 & first_random == 1 & (test == "aoy1" | test == "aoy2" | test == "aoy3" | test == "aoy4")
 replace CT_pretreat = 0 if CT == 1 & second_random == 1
 
 **Create CK_prekinder which is only defined for those who have been randomised twice: first into control and than into kinderprep
 **"1" means that the kid has taken this test before undergoing kinderprep 
 gen CK_prekinder = .
-replace CK_prekinder = 1 if CK == 1 & first_random == 1 & (test == "mid" | test == "post" | test == "sl" | test == "aoy1")
+replace CK_prekinder = 1 if CK == 1 & first_random == 1 & (test =="pre" | test == "mid" | test == "post" | test == "sl" | test == "aoy1")
 replace CK_prekinder = 0 if CK == 1 & first_random == 1 & (test == "aoy2" | test == "aoy3" | test == "aoy4")
 replace CK_prekinder = 0 if CK == 1 & second_random == 1
 
@@ -249,9 +246,9 @@ drop _merge
 **If want to reproduce table restricting sample to control kids, add the code below
 
 
-/*
+
 keep if (C == 1 & first_random == 1) | (CC == 1 & first_random == 1) | (CT_pretreat == 1) | (CK_prekinder == 1)
-*/
+
 
 ***********************************************************************************
 
@@ -353,9 +350,9 @@ use newv_table34_unique_data_clean
 **If want to reproduce table restricting sample to control kids, add the code below
 
 
-/*
+
 keep if (C == 1 & first_random == 1) | (CC == 1 & first_random == 1) | (CT_pretreat == 1) | (CK_prekinder == 1)
-*/
+
 
 
 ***********************************************************************************
@@ -678,7 +675,7 @@ gen percent_treated_`distance' = (treated_`distance' / (treated_`distance' + con
 **Merging with distance to school and block group variable
 foreach file in Relevant_DistToSchool_1 Relevant_DistToSchool_2 Relevant_censusblock_checc {
 merge m:1 child using `file'
-drop if _merge == 2
+*drop if _merge == 2
 drop _merge
 } 
 
@@ -700,9 +697,9 @@ use newv_table56_unique_data_clean
 **If want to reproduce table restricting sample to control kids, add the code below
 
 
-/*
+
 keep if (C == 1 & first_random == 1) | (CC == 1 & first_random == 1) | (CT_pretreat == 1) | (CK_prekinder == 1)
-*/
+
 
 
 ***********************************************************************************
@@ -840,9 +837,9 @@ use newv_table56_unique_data_clean
 ***********************************************************************************
 **If want to reproduce table restricting sample to control kids, add the code below
 
-/*
+
 keep if (C == 1 & first_random == 1) | (CC == 1 & first_random == 1) | (CT_pretreat == 1) | (CK_prekinder == 1)
-*/
+
 
 
 ***********************************************************************************
@@ -929,15 +926,12 @@ use newv_table56_unique_data_clean
 ***********************************************************************************
 **If want to reproduce table restricting sample to control kids, add the code below
 
-/*
+
 keep if (C == 1 & first_random == 1) | (CC == 1 & first_random == 1) | (CT_pretreat == 1) | (CK_prekinder == 1)
-*/
+
 
 ***********************************************************************************
 
-**For the regression, drop observations that had no pre scores 
-drop if (no_cog_pre == 1 | no_ncog_pre == 1)
-	
 replace age_pre = . if age_pre == 0	
 
 **Creating factor variables
@@ -992,7 +986,7 @@ foreach d of local distance  {
 	foreach assess in cog ncog {
 
 	***FIXED EFFECTS
-	quietly xtreg std_`assess' percent_treated_`d' std_cog_pre std_ncog_pre distto1 distto2 i.gender_num i.race_num i.year i.blockgroup_num i.test_num age_pre if has_`assess' == 1, fe cluster(child) 
+	quietly xtreg std_`assess' percent_treated_`d'  i.test_num if has_`assess' == 1, fe cluster(child) 
 	
 	matrix d = r(table) 
 
@@ -1055,17 +1049,15 @@ use newv_table56_unique_data_clean
 **If want to reproduce table restricting sample to control kids, add the code below
 
 
-/*
+
 keep if (C == 1 & first_random == 1) | (CC == 1 & first_random == 1) | (CT_pretreat == 1) | (CK_prekinder == 1)
-*/
+
 
 
 ***********************************************************************************
 
 
-**For the regression, drop observations that had no pre scores 
-drop if (no_cog_pre == 1 | no_ncog_pre == 1)
-	
+
 replace age_pre = . if age_pre == 0	
 
 **Creating factor variables
@@ -1121,7 +1113,7 @@ foreach d of local distance  {
 	foreach assess in cog ncog {
 
 	***FIXED EFFECTS
-	quietly xtreg std_`assess' percent_treated_`d' std_cog_pre std_ncog_pre distto1 distto2 i.race_num i.year i.blockgroup_num i.test_num age_pre if (has_`assess' == 1 & gender_num == 2), fe cluster(child) 
+	quietly xtreg std_`assess' percent_treated_`d' i.test_num if (has_`assess' == 1 & gender_num == 2), fe cluster(child) 
 	
 	matrix d = r(table) 
 
@@ -1172,7 +1164,7 @@ foreach d of local distance  {
 	foreach assess in cog ncog {
 
 	***FIXED EFFECTS
-	quietly xtreg std_`assess' percent_treated_`d' std_cog_pre std_ncog_pre distto1 distto2 i.race_num i.year i.blockgroup_num i.test_num age_pre if (has_`assess' == 1 & gender_num == 1), fe cluster(child) 
+	quietly xtreg std_`assess' percent_treated_`d' i.test_num if (has_`assess' == 1 & gender_num == 1), fe cluster(child) 
 	
 	matrix d = r(table) 
 
@@ -1240,9 +1232,9 @@ use newv_table34_unique_data_clean
 **If want to reproduce table restricting sample to control kids, add the code below
 
 
-/*
+
 keep if (C == 1 & first_random == 1) | (CC == 1 & first_random == 1) | (CT_pretreat == 1) | (CK_prekinder == 1)
-*/
+
 
 ***********************************************************************************
 
@@ -1263,13 +1255,10 @@ gen percent_treated_`distance' = (treated_`distance'_male / (treated_`distance'_
 **Merging with distance to school and block group variable
 foreach file in Relevant_DistToSchool_1 Relevant_DistToSchool_2 Relevant_censusblock_checc {
 merge m:1 child using `file'
-drop if _merge == 2
+*drop if _merge == 2
 drop _merge
 } 
 
-
-**For the regression, drop observations that had no pre scores 
-drop if (no_cog_pre == 1 | no_ncog_pre == 1)
 	
 replace age_pre = . if age_pre == 0	
 
@@ -1325,7 +1314,7 @@ foreach d of local distance  {
 	
 
 	***FIXED EFFECTS
-	quietly xtreg std_`assess' percent_treated_`d' std_cog_pre std_ncog_pre distto1 distto2 i.race_num i.year i.blockgroup_num i.test_num age_pre  if has_`assess' == 1 & gender == "Male", fe cluster(child) 
+	quietly xtreg std_`assess' percent_treated_`d' i.test_num  if has_`assess' == 1 & gender == "Male", fe cluster(child) 
 	
 	matrix d = r(table) 
 
@@ -1387,9 +1376,9 @@ use newv_table34_unique_data_clean
 **If want to reproduce table restricting sample to control kids, add the code below
 
 
-/*
+
 keep if (C == 1 & first_random == 1) | (CC == 1 & first_random == 1) | (CT_pretreat == 1) | (CK_prekinder == 1)
-*/
+
 
 ***********************************************************************************
 
@@ -1410,13 +1399,10 @@ gen percent_treated_`distance' = (treated_`distance'_female / (treated_`distance
 **Merging with distance to school and block group variable
 foreach file in Relevant_DistToSchool_1 Relevant_DistToSchool_2 Relevant_censusblock_checc {
 merge m:1 child using `file'
-drop if _merge == 2
+*drop if _merge == 2
 drop _merge
 } 
 
-
-**For the regression, drop observations that had no pre scores 
-drop if (no_cog_pre == 1 | no_ncog_pre == 1)
 	
 replace age_pre = . if age_pre == 0	
 
@@ -1472,7 +1458,7 @@ foreach d of local distance  {
 	
 
 	***FIXED EFFECTS
-	quietly xtreg std_`assess' percent_treated_`d' std_cog_pre std_ncog_pre distto1 distto2 i.race_num i.year i.blockgroup_num i.test_num age_pre if has_`assess' == 1 & gender == "Female", fe cluster(child) 
+	quietly xtreg std_`assess' percent_treated_`d'  i.test_num if has_`assess' == 1 & gender == "Female", fe cluster(child) 
 	
 	matrix d = r(table) 
 
@@ -1537,16 +1523,14 @@ use newv_table56_unique_data_clean
 **If want to reproduce table restricting sample to control kids, add the code below
 
 
-/*
+
 keep if (C == 1 & first_random == 1) | (CC == 1 & first_random == 1) | (CT_pretreat == 1) | (CK_prekinder == 1)
-*/
+
 
 
 ***********************************************************************************
 
-**For the regression, drop observations that had no pre scores 
-drop if (no_cog_pre == 1 | no_ncog_pre == 1)
-	
+
 replace age_pre = . if age_pre == 0	
 
 **Creating factor variables
@@ -1602,7 +1586,7 @@ foreach d of local distance  {
 	foreach assess in cog ncog { 
 
 	***FIXED EFFECTS
-	quietly xtreg std_`assess' percent_treated_`d' std_cog_pre std_ncog_pre distto1 distto2 i.gender_num i.year i.blockgroup_num i.test_num age_pre if (has_`assess' == 1 & race_num == 2), fe cluster(child) 
+	quietly xtreg std_`assess' percent_treated_`d' i.test_num if (has_`assess' == 1 & race_num == 2), fe cluster(child) 
 	
 	matrix d = r(table) 
 
@@ -1654,7 +1638,7 @@ foreach d of local distance  {
 	
 
 	***FIXED EFFECTS
-	quietly xtreg std_`assess' percent_treated_`d' std_cog_pre std_ncog_pre distto1 distto2 i.gender_num i.year i.blockgroup_num i.test_num age_pre if (has_`assess' == 1 & race_num == 1), fe cluster(child) 
+	quietly xtreg std_`assess' percent_treated_`d' i.test_num if (has_`assess' == 1 & race_num == 1), fe cluster(child) 
 	
 	matrix d = r(table) 
 
@@ -1720,9 +1704,9 @@ use newv_table34_unique_data_clean
 **If want to reproduce table restricting sample to control kids, add the code below
 
 
-/*
+
 keep if (C == 1 & first_random == 1) | (CC == 1 & first_random == 1) | (CT_pretreat == 1) | (CK_prekinder == 1)
-*/
+
 
 
 ***********************************************************************************
@@ -1745,13 +1729,10 @@ gen percent_treated_`distance' = (treated_`distance'_hispanic / (treated_`distan
 **Merging with distance to school and block group variable
 foreach file in Relevant_DistToSchool_1 Relevant_DistToSchool_2 Relevant_censusblock_checc {
 merge m:1 child using `file'
-drop if _merge == 2
+*drop if _merge == 2
 drop _merge
 } 
 
-
-**For the regression, drop observations that had no pre scores 
-drop if (no_cog_pre == 1 | no_ncog_pre == 1)
 	
 replace age_pre = . if age_pre == 0	
 
@@ -1806,7 +1787,7 @@ foreach d of local distance  {
 	foreach assess in cog ncog { 
 
 	***FIXED EFFECTS
-	quietly xtreg std_`assess' percent_treated_`d' std_cog_pre std_ncog_pre distto1 distto2 i.gender_num i.year i.blockgroup_num i.test_num age_pre  if has_`assess' == 1 & race == "Hispanic", fe cluster(child) 
+	quietly xtreg std_`assess' percent_treated_`d' i.test_num  if has_`assess' == 1 & race == "Hispanic", fe cluster(child) 
 	
 	matrix d = r(table) 
 
@@ -1870,9 +1851,8 @@ use newv_table34_unique_data_clean
 **If want to reproduce table restricting sample to control kids, add the code below
 
 
-/*
+
 keep if (C == 1 & first_random == 1) | (CC == 1 & first_random == 1) | (CT_pretreat == 1) | (CK_prekinder == 1)
-*/
 
 
 ***********************************************************************************
@@ -1894,13 +1874,9 @@ gen percent_treated_`distance' = (treated_`distance'_black / (treated_`distance'
 **Merging with distance to school and block group variable
 foreach file in Relevant_DistToSchool_1 Relevant_DistToSchool_2 Relevant_censusblock_checc {
 merge m:1 child using `file'
-drop if _merge == 2
+*drop if _merge == 2
 drop _merge
 } 
-
-
-**For the regression, drop observations that had no pre scores 
-drop if (no_cog_pre == 1 | no_ncog_pre == 1)
 	
 replace age_pre = . if age_pre == 0	
 
@@ -1955,7 +1931,7 @@ foreach d of local distance  {
 	foreach assess in cog ncog {
 
 	***FIXED EFFECTS
-	quietly xtreg std_`assess' percent_treated_`d' std_cog_pre std_ncog_pre distto1 distto2 i.gender_num i.year i.blockgroup_num i.test_num age_pre  if has_`assess' == 1 & race == "African American", fe cluster(child) 
+	quietly xtreg std_`assess' percent_treated_`d' i.test_num  if has_`assess' == 1 & race == "African American", fe cluster(child) 
 	
 	matrix d = r(table) 
 
@@ -2017,9 +1993,9 @@ use newv_table34_unique_data_clean
 **If want to reproduce table restricting sample to control kids, add the code below
 
 
-/*
+
 keep if (C == 1 & first_random == 1) | (CC == 1 & first_random == 1) | (CT_pretreat == 1) | (CK_prekinder == 1)
-*/
+
 
 
 ***********************************************************************************
@@ -2114,12 +2090,10 @@ file close file11
 **Merging with distance to school and block group variable
 foreach file in Relevant_DistToSchool_1 Relevant_DistToSchool_2 Relevant_censusblock_checc {
 merge m:1 child using `file'
-drop if _merge == 2
+*drop if _merge == 2
 drop _merge
 } 
 
-**For the regression, drop observations that had no pre scores 
-drop if (no_cog_pre == 1 | no_ncog_pre == 1)
 	
 replace age_pre = . if age_pre == 0	
 
@@ -2199,7 +2173,7 @@ foreach d of local ring  {
 		local j = `j' + 1 
 
 	***FIXED EFFECTS
-	quietly xtreg std_`assess' percent_treated_`d' std_cog_pre std_ncog_pre distto1 distto2 i.gender_num i.race_num i.year i.blockgroup_num i.test_num age_pre if has_`assess' == 1, fe cluster(child) 
+	quietly xtreg std_`assess' percent_treated_`d' i.test_num if has_`assess' == 1, fe cluster(child) 
 	
 	matrix d = r(table) 
 
@@ -2284,9 +2258,9 @@ use newv_table34_unique_data_clean
 **If want to reproduce table restricting sample to control kids, add the code below
 
 
-/*
+
 keep if (C == 1 & first_random == 1) | (CC == 1 & first_random == 1) | (CT_pretreat == 1) | (CK_prekinder == 1)
-*/
+
 
 ***********************************************************************************
 
@@ -2308,13 +2282,10 @@ gen percent_child_treated_`d' = ((cogx_`d' + preschool_`d' + kinderprep_`d' + pk
 **Merging with distance to school and block group variable
 foreach file in Relevant_DistToSchool_1 Relevant_DistToSchool_2 Relevant_censusblock_checc {
 merge m:1 child using `file'
-drop if _merge == 2
+*drop if _merge == 2
 drop _merge
 } 
 
-**For the regression, drop observations that had no pre scores 
-drop if (no_cog_pre == 1 | no_ncog_pre == 1)
-	
 replace age_pre = . if age_pre == 0	
 
 **Creating factor variables
@@ -2368,7 +2339,7 @@ foreach d of local distance  {
 	foreach assess in cog ncog {
 
 	***FIXED EFFECTS
-	quietly xtreg std_`assess' percent_parent_treated_`d' percent_child_treated_`d' std_cog_pre std_ncog_pre distto1 distto2 i.gender_num i.race_num i.year i.blockgroup_num i.test_num age_pre if has_`assess' == 1, fe cluster(child) 
+	quietly xtreg std_`assess' percent_parent_treated_`d' percent_child_treated_`d' i.test_num if has_`assess' == 1, fe cluster(child) 
 	
 	matrix d = r(table) 
 
@@ -2437,7 +2408,7 @@ file write file13 _n "\end{document}"
 
 file close file13
 
-
+/*
 ************************************************
 ***Final Data Set for Friend Network Analysis****
 ************************************************
