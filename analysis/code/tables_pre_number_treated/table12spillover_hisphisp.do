@@ -22,11 +22,19 @@ keep if (C == 1 & first_random == 1) | (CC == 1 & first_random == 1) | (CT_pretr
 
 merge 1:1 child test year using merged_hispanic_neigh_count
 
-**Keeping the observations pertaining to the "neighbor Hispanic within 20,000 distance" subsample
-keep if _merge == 3
+**Drop observations not pertaining to our analytical sample
+drop if _merge == 2
 
 drop _merge
 
+**Merging with number of Black neighbors
+
+merge 1:1 child test year using merged_black_neigh_count
+
+**Drop observations not pertaining to our analytical sample
+drop if _merge == 2
+
+drop _merge
 **Defining Key Explanatory Variable
 foreach distance in 500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000 {
 gen percent_treated_`distance' = (treated_`distance'_hispanic / (treated_`distance'_hispanic + control_`distance'_hispanic))*100
