@@ -9,10 +9,9 @@ use table34_unique_data_clean
 **Merging with number of neighbours
 
 merge 1:1 child test year using merged_neigh_count
-keep if _merge == 3
 
-**Some observations from the master file are not matched to the using file as those kids did not have any neighbors living in a radius
-**smaller than 20,000
+**Dropping observations not pertaining to our analytical sample
+drop if _merge == 2
 
 drop _merge
 foreach distance in 500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000 {
