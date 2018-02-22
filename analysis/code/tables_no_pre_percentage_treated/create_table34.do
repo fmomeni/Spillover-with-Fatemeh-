@@ -17,9 +17,9 @@ drop _merge
 ***********************************************************************************
 **If want to reproduce table restricting sample to control kids, add the code below
 
-/*
+
 keep if (C == 1 & first_random == 1) | (CC == 1 & first_random == 1) | (CT_pretreat == 1) | (CK_prekinder == 1)
-*/
+
 
 ***********************************************************************************
 
@@ -117,9 +117,9 @@ drop if test =="pre"
 ***********************************************************************************
 **If want to reproduce table restricting sample to control kids, add the code below
 
-/*
+
 keep if (C == 1 & first_random == 1) | (CC == 1 & first_random == 1) | (CT_pretreat == 1) | (CK_prekinder == 1)
-*/
+
 
 ***********************************************************************************
 
