@@ -17,9 +17,9 @@ drop _merge
 ***********************************************************************************
 **If want to reproduce table restricting sample to control kids, add the code below
 
-/*
+
 keep if (C == 1 & first_random == 1) | (CC == 1 & first_random == 1) | (CT_pretreat == 1) | (CK_prekinder == 1)
-*/
+
 
 ***********************************************************************************
 
@@ -49,7 +49,7 @@ local j = 1
 
 foreach x in cog ncog {
 	tabstat std_`x' if has_`x' == 1, by(test) save stat(mean semean n)
-	foreach stat in Stat7 Stat5 Stat6 Stat8 Stat1 Stat2 Stat3 Stat4 {
+	foreach stat in Stat5 Stat6 Stat7 Stat1 Stat2 Stat3 Stat4 {
 		mat a = r(`stat')
 		local item`i' = string(a[3,1], "%13.0gc") //Num of observations
 		local i = `i' + 1
@@ -63,32 +63,28 @@ foreach x in cog ncog {
 		}
 }
 
-
-file write file0 _n	"\multirow{2}{*}{Pre } & \multirow{2}{*}{`item1'} & `item2' & \multirow{2}{*}{`item25'} & `item26'\\"
-file write file0 _n	"& & (`item3') & & (`item27')\\"
+file write file0 _n	"\multirow{2}{*}{Mid } & \multirow{2}{*}{`item1'} & `item2' & \multirow{2}{*}{`item22'} & `item23'\\"
+file write file0 _n	"& & (`item3') & & (`item24')\\"
 file write file0 _n	"& & & & \\"
-file write file0 _n	"\multirow{2}{*}{Mid } & \multirow{2}{*}{`item4'} & `item5' & \multirow{2}{*}{`item28'} & `item29'\\"
-file write file0 _n	"& & (`item6') & & (`item30')\\"
+file write file0 _n	"\multirow{2}{*}{Post } & \multirow{2}{*}{`item4'} & `item5' & \multirow{2}{*}{`item25'} & `item26'\\"
+file write file0 _n	"& & (`item6') & & (`item27')\\"
 file write file0 _n	"& & & & \\"
-file write file0 _n	"\multirow{2}{*}{Post } & \multirow{2}{*}{`item7'} & `item8' & \multirow{2}{*}{`item31'} & `item32'\\"
-file write file0 _n	"& & (`item9') & & (`item33')\\"
+file write file0 _n	"Summer Loss & \multirow{2}{*}{`item7'} & `item8' & \multirow{2}{*}{`item28'} & `item29'\\"
+file write file0 _n	"& & (`item9') & & (`item30')\\"
 file write file0 _n	"& & & & \\"
-file write file0 _n	"Summer Loss & \multirow{2}{*}{`item10'} & `item11' & \multirow{2}{*}{`item34'} & `item35'\\"
-file write file0 _n	"& & (`item12') & & (`item36')\\"
-file write file0 _n	"& & & & \\"
-file write file0 _n	"Aged-Out Year 1 & \multirow{2}{*}{`item13'} & `item14' & \multirow{2}{*}{`item37'} & `item38' \\"
-file write file0 _n	"& & (`item15') & & (`item39')\\"
+file write file0 _n	"Aged-Out Year 1 & \multirow{2}{*}{`item10'} & `item11' & \multirow{2}{*}{`item31'} & `item32' \\"
+file write file0 _n	"& & (`item12') & & (`item33')\\"
 file write file0 _n	"& & & &\\"
-file write file0 _n	"Aged-Out Year 2  & \multirow{2}{*}{`item16'} & `item17' & \multirow{2}{*}{`item40'} & `item41'\\"
-file write file0 _n	"& & (`item18') & & (`item42')\\"
+file write file0 _n	"Aged-Out Year 2  & \multirow{2}{*}{`item13'} & `item14' & \multirow{2}{*}{`item34'} & `item35'\\"
+file write file0 _n	"& & (`item15') & & (`item36')\\"
 file write file0 _n	"& & & & \\"
-file write file0 _n	"Aged-Out Year 3  & \multirow{2}{*}{`item19'} & `item20' & \multirow{2}{*}{`item43'} & `item44'\\"
-file write file0 _n	"& & (`item21') & & (`item45')\\"
+file write file0 _n	"Aged-Out Year 3  & \multirow{2}{*}{`item16'} & `item17' & \multirow{2}{*}{`item37'} & `item38'\\"
+file write file0 _n	"& & (`item18') & & (`item39')\\"
 file write file0 _n	"& & & & \\"
-file write file0 _n	"Aged-Out Year 4 & \multirow{2}{*}{`item22'} & `item23' & \multirow{2}{*}{`item46'} & `item47'\\"
-file write file0 _n	"& & (`item24') & & (`item48')\\"
+file write file0 _n	"Aged-Out Year 4 & \multirow{2}{*}{`item19'} & `item20' & \multirow{2}{*}{`item40'} & `item41'\\"
+file write file0 _n	"& & (`item21') & & (`item42')\\"
 file write file0 _n	"& & & & \\"
-file write file0 _n	"N Total  & `itemtotal1' &  & `itemtotal9' & \\"
+file write file0 _n	"N Total  & `itemtotal1' &  & `itemtotal8' & \\"
 file write file0 _n	"\bottomrule"
 file write file0 _n	"\end{tabular}"
 file write file0 _n	"\begin{tablenotes}"
@@ -119,9 +115,9 @@ drop if test =="pre"
 ***********************************************************************************
 **If want to reproduce table restricting sample to control kids, add the code below
 
-/*
+
 keep if (C == 1 & first_random == 1) | (CC == 1 & first_random == 1) | (CT_pretreat == 1) | (CK_prekinder == 1)
-*/
+
 
 ***********************************************************************************
 
