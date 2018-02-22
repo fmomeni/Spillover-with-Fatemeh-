@@ -22,7 +22,7 @@ gen percent_treated_`distance' = (treated_`distance' / (treated_`distance' + con
 **Merging with distance to school and block group variable
 foreach file in Relevant_DistToSchool_1 Relevant_DistToSchool_2 Relevant_censusblock_checc {
 merge m:1 child using `file'
-drop if _merge == 2
+*drop if _merge == 2
 drop _merge
 } 
 
