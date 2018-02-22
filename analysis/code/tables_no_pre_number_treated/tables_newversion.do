@@ -1250,14 +1250,24 @@ keep if (C == 1 & first_random == 1) | (CC == 1 & first_random == 1) | (CT_pretr
 
 ***********************************************************************************
 
-**Merging with number of neighbors for boys
+**Merging with number of male neighbors
 
 merge 1:1 child test year using merged_male_neigh_count
 
-**Keeping the observations pertaining to the "boys neighbor with distance at most 20,000" subsample
-keep if _merge == 3
+**Dropping kids not pertaining to our analytical sample
+drop if _merge == 2
 
 drop _merge
+
+**Merging with number of female neighbors
+
+merge 1:1 child test year using merged_female_neigh_count
+
+**Dropping kids not pertaining to our analytical sample
+drop if _merge == 2
+
+drop _merge
+
 
 **Defining Key Explanatory Variable
 foreach distance in 500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000 {
@@ -1752,8 +1762,17 @@ keep if (C == 1 & first_random == 1) | (CC == 1 & first_random == 1) | (CT_pretr
 
 merge 1:1 child test year using merged_hispanic_neigh_count
 
-**Keeping the observations pertaining to the "neighbor Hispanic within 20,000 distance" subsample
-keep if _merge == 3
+**Drop observations not pertaining to our analytical sample
+drop if _merge == 2
+
+drop _merge
+
+**Merging with number of Black neighbors
+
+merge 1:1 child test year using merged_black_neigh_count
+
+**Drop observations not pertaining to our analytical sample
+drop if _merge == 2
 
 drop _merge
 
