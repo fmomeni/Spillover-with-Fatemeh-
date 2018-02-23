@@ -212,7 +212,9 @@ replace CK_prekinder = 0 if CK == 1 & second_random == 1
 **Merging with number of neighbours
 
 merge 1:1 child test year using merged_neigh_count
-keep if _merge == 3
+
+**Dropping kids not pertaining to our analytical sample 
+drop if _merge == 2
 
 **Some observations from the master file are not matched to the using file as those kids did not have any neighbors living in a radius
 **smaller than 20,000
@@ -303,7 +305,7 @@ foreach d of local distance  {
 	
 	if "`assess'" == "same" {
 		***POOLED OLS
-	quietly reg std_`assess' treated_`d' total_neigh_`d' std_cog_pre std_ncog_pre distto1 distto2 i.gender_num i.race_num i.year i.blockgroup_num i.test_num age_pre if (has_`assess' == 1 | has_`assess' == 2) & (year == 2012 | year == 2013) & (test_num == 1 |test_num == 2| test_num == 3) , cluster(child)
+	quietly reg std_`assess' treated_`d' total_neigh_`d' std_cog_pre std_ncog_pre distto1 distto2 i.gender_num i.race_num i.year i.blockgroup_num i.test_num age_pre if (has_`assess' == 1 | has_`assess' == 2) & (year == 2012 | year == 2013) & (test_num == 0 | test_num == 1 |test_num == 2| test_num == 3) , cluster(child)
 	
 	matrix d = r(table) 
 
@@ -441,7 +443,7 @@ foreach d of local distance  {
 	
 	if "`assess'" == "same" {
 		***FIXED EFFECTS
-	quietly xtreg std_`assess' treated_`d' total_neigh_`d'  i.test_num if (has_`assess' == 1 | has_`assess' == 2) & (year == 2012 | year == 2013) & (test_num == 1 |test_num == 2| test_num == 3) , fe cluster(child)
+	quietly xtreg std_`assess' treated_`d' total_neigh_`d'  i.test_num if (has_`assess' == 1 | has_`assess' == 2) & (year == 2012 | year == 2013) & (test_num == 0 | test_num == 1 |test_num == 2| test_num == 3) , fe cluster(child)
 	
 	matrix d = r(table) 
 
@@ -579,7 +581,7 @@ foreach d of local distance  {
 	
 	if "`assess'" == "same" {
 		***RANDOM EFFECTS
-	quietly xtreg std_`assess' treated_`d' total_neigh_`d' std_cog_pre std_ncog_pre distto1 distto2 i.gender_num i.race_num i.year i.blockgroup_num i.test_num age_pre if (has_`assess' == 1 | has_`assess' == 2) & (year == 2012 | year == 2013) & (test_num == 1 |test_num == 2| test_num == 3) , re cluster(child)
+	quietly xtreg std_`assess' treated_`d' total_neigh_`d' std_cog_pre std_ncog_pre distto1 distto2 i.gender_num i.race_num i.year i.blockgroup_num i.test_num age_pre if (has_`assess' == 1 | has_`assess' == 2) & (year == 2012 | year == 2013) & (test_num == 0 | test_num == 1 |test_num == 2| test_num == 3) , re cluster(child)
 	
 	matrix d = r(table) 
 
