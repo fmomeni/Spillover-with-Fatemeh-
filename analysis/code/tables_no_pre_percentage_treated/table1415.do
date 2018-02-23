@@ -22,8 +22,8 @@ keep if (C == 1 & first_random == 1) | (CC == 1 & first_random == 1) | (CT_pretr
 
 merge 1:1 child test year using merged_neigh_count_rings
 
-**Keeping the observations pertaining to our relevant sample
-keep if _merge == 3
+**Drop observations not pertaining to our analytical sample
+drop if _merge == 2
 
 drop _merge
 

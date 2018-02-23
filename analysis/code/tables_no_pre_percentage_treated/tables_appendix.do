@@ -215,13 +215,15 @@ replace CK_prekinder = 0 if CK == 1 & second_random == 1
 **Merging with number of neighbours
 
 merge 1:1 child test year using merged_neigh_count
-keep if _merge == 3
+
+**Dropping kids not pertaining to our analytical sample
+drop if _merge == 2
 
 **Some observations from the master file are not matched to the using file as those kids did not have any neighbors living in a radius
 **smaller than 20,000
 
 drop _merge
-foreach distance in 500 1000 5000 10000 15000 20000 {
+foreach distance in 500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000 {
 gen percent_treated_`distance' = (treated_`distance' / (treated_`distance' + control_`distance'))*100
 }
 
@@ -267,7 +269,7 @@ sort child test_num
 xtset child test_num	
 	
 
-local distance "1000 5000 10000 15000 20000"
+local distance "500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000"
 local num : list sizeof local(distance)
 local i = 1
 
@@ -464,7 +466,7 @@ foreach d of local distance  {
 			
 	else if "`assess'" == "card" {
 		***FIXED EFFECTS
-	quietly xtreg std_`assess' percent_treated_`d'  i.test_num if (has_`assess' == 1 | has_`assess' == 2) & (test_num == 4 |test_num == 5| test_num == 6 | test_num == 7) , fe cluster(child)
+	quietly xtreg std_`assess' percent_treated_`d' i.test_num if (has_`assess' == 1 | has_`assess' == 2) & (test_num == 4 |test_num == 5| test_num == 6 | test_num == 7) , fe cluster(child)
 	
 	matrix d = r(table) 
 
@@ -491,7 +493,7 @@ foreach d of local distance  {
 	
 	else {
 	***FIXED EFFECTS
-	quietly xtreg std_`assess' percent_treated_`d'  i.test_num  if (has_`assess' == 1 | has_`assess' == 2) , fe cluster(child)
+	quietly xtreg std_`assess' percent_treated_`d' i.test_num if (has_`assess' == 1 | has_`assess' == 2) , fe cluster(child)
 	
 	matrix d = r(table) 
 

@@ -27,7 +27,7 @@ keep if _merge == 3
 drop _merge
 
 **Defining Percent Parent Treated and Percent Child Treated
-foreach d in 1000 5000 10000 15000 20000 {
+foreach distance in 500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000 {
 gen percent_parent_treated_`d' = ((cash_`d'+ college_`d') / (treated_`d' + control_`d'))*100
 gen percent_child_treated_`d' = ((cogx_`d' + preschool_`d' + kinderprep_`d' + pka_`d' + pkb_`d')/ (treated_`d' + control_`d'))*100
 }
@@ -62,7 +62,7 @@ sort child test_num
 xtset child test_num	
 	
 
-local distance "1000 5000 10000 15000 20000"
+local distance "500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000"
 local num : list sizeof local(distance)
 local i = 1
 
@@ -80,9 +80,9 @@ file write file13 _n "\begin{table}[H]\centering \caption{The Effect from Parent
 file write file13 _n "\begin{tabular}{cccc|ccc}"
 file write file13 _n "\toprule"
 file write file13 _n "\midrule"
-file write file13 _n "& \multicolumn{3}{c}{Cognitive Scores} & \multicolumn{3}{c}{Non-cognitive Scores}\\ \cline{2-7}"
-file write file13 _n "& Pooled OLS & Fixed Effect & Random Effect & Pooled OLS & Fixed Effect & Random Effect\\"
-file write file13 _n "Distance & (1) & (2) & (3) & (4) & (5) & (6)\\"
+file write file13 _n "& \multicolumn{1}{c}{Cognitive Scores} & \multicolumn{1}{c}{Non-cognitive Scores}\\ \cline{2-7}"
+file write file13 _n "& Fixed Effect & Fixed Effect\\"
+file write file13 _n "Distance & (1) & (2) \\"
 file write file13 _n "\midrule"
 
 **Running mechanism regressions	
@@ -91,46 +91,6 @@ file write file13 _n "\midrule"
 foreach d of local distance  {	
 	local j = 1
 	foreach assess in cog ncog {
-	***POOLED OLS
-	quietly reg std_`assess' percent_parent_treated_`d' percent_child_treated_`d' std_cog_pre std_ncog_pre distto1 distto2 i.gender_num i.race_num i.year i.blockgroup_num i.test_num age_pre if has_`assess' == 1, cluster(child)
-	
-	matrix d = r(table) 
-
-	*adding stars for parent effect
-		if d[4,1] < 0.01 {
-			local item_p`j'_`d' = string(round(_b[percent_parent_treated_`d'], .0001), "%13.0gc") + "***"
-		}
-		else if d[4,1] < 0.05 & d[4,1] >= 0.01 {
-			local item_p`j'_`d' = string(round(_b[percent_parent_treated_`d'], .0001), "%13.0gc") + "**"
-		}
-		else if d[4,1] < 0.1 & d[4,1] >= 0.05 {
-			local item_p`j'_`d' = string(round(_b[percent_parent_treated_`d'], .0001), "%13.0gc") + "*"
-		}
-		else {
-			local item_p`j'_`d' = string(round(_b[percent_parent_treated_`d'], .0001), "%13.0gc")
-		}		
-		
-		local se_p`j'_`d' = string(round(_se[percent_parent_treated_`d'], .0001), "%13.0gc")
-
-		*adding stars for child effect
-		if d[4,2] < 0.01 {
-			local item_c`j'_`d' = string(round(_b[percent_child_treated_`d'], .0001), "%13.0gc") + "***"
-		}
-		else if d[4,2] < 0.05 & d[4,2] >= 0.01 {
-			local item_c`j'_`d' = string(round(_b[percent_child_treated_`d'], .0001), "%13.0gc") + "**"
-		}
-		else if d[4,2] < 0.1 & d[4,2] >= 0.05 {
-			local item_c`j'_`d' = string(round(_b[percent_child_treated_`d'], .0001), "%13.0gc") + "*"
-		}
-		else {
-			local item_c`j'_`d' = string(round(_b[percent_child_treated_`d'], .0001), "%13.0gc")
-		}		
-		
-		local se_c`j'_`d' = string(round(_se[percent_child_treated_`d'], .0001), "%13.0gc")
-
-
-		
-		local j = `j' + 1 
 
 	***FIXED EFFECTS
 	quietly xtreg std_`assess' percent_parent_treated_`d' percent_child_treated_`d' i.test_num if has_`assess' == 1, fe cluster(child) 
@@ -172,54 +132,15 @@ foreach d of local distance  {
 		
 		local j = `j' + 1
 
-
-	***RANDOM EFFECTS
-	quietly xtreg std_`assess' percent_parent_treated_`d' percent_child_treated_`d' std_cog_pre std_ncog_pre distto1 distto2 i.gender_num i.race_num i.year i.blockgroup_num i.test_num age_pre if has_`assess' == 1, re cluster(child) 
-	matrix d = r(table) 
-
-		*adding stars for parent effect
-		if d[4,1] < 0.01 {
-			local item_p`j'_`d' = string(round(_b[percent_parent_treated_`d'], .0001), "%13.0gc") + "***"
-		}
-		else if d[4,1] < 0.05 & d[4,1] >= 0.01 {
-			local item_p`j'_`d' = string(round(_b[percent_parent_treated_`d'], .0001), "%13.0gc") + "**"
-		}
-		else if d[4,1] < 0.1 & d[4,1] >= 0.05 {
-			local item_p`j'_`d' = string(round(_b[percent_parent_treated_`d'], .0001), "%13.0gc") + "*"
-		}
-		else {
-			local item_p`j'_`d' = string(round(_b[percent_parent_treated_`d'], .0001), "%13.0gc")
-		}		
-		
-		local se_p`j'_`d' = string(round(_se[percent_parent_treated_`d'], .0001), "%13.0gc")
-
-		*adding stars for child effect
-		if d[4,2] < 0.01 {
-			local item_c`j'_`d' = string(round(_b[percent_child_treated_`d'], .0001), "%13.0gc") + "***"
-		}
-		else if d[4,2] < 0.05 & d[4,2] >= 0.01 {
-			local item_c`j'_`d' = string(round(_b[percent_child_treated_`d'], .0001), "%13.0gc") + "**"
-		}
-		else if d[4,2] < 0.1 & d[4,2] >= 0.05 {
-			local item_c`j'_`d' = string(round(_b[percent_child_treated_`d'], .0001), "%13.0gc") + "*"
-		}
-		else {
-			local item_c`j'_`d' = string(round(_b[percent_child_treated_`d'], .0001), "%13.0gc")
-		}		
-		
-		local se_c`j'_`d' = string(round(_se[percent_child_treated_`d'], .0001), "%13.0gc")
-
-		
-		local j = `j' + 1
 	}
 
-file write file13 _n "$P^{Parent}_{i,t,`d'}$ & `item_p1_`d'' & `item_p2_`d'' & `item_p3_`d''  & `item_p4_`d'' & `item_p5_`d'' & `item_p6_`d''\\"
-file write file13 _n "& (`se_p1_`d'') & (`se_p2_`d'') & (`se_p3_`d'') & (`se_p4_`d'') & (`se_p5_`d'') & (`se_p6_`d'')\\"
-file write file13 _n "$P^{Child}_{i,t,`d'}$ & `item_c1_`d'' & `item_c2_`d'' & `item_c3_`d''  & `item_c4_`d'' & `item_c5_`d'' & `item_c6_`d''\\"
-file write file13 _n "& (`se_c1_`d'') & (`se_c2_`d'') & (`se_c3_`d'') & (`se_c4_`d'') & (`se_c5_`d'') & (`se_c6_`d'')\\"
+file write file13 _n "$P^{Parent}_{i,t,`d'}$ & `item_p1_`d'' & `item_p2_`d'' \\"
+file write file13 _n "& (`se_p1_`d'') & (`se_p2_`d'') \\"
+file write file13 _n "$P^{Child}_{i,t,`d'}$ & `item_c1_`d'' & `item_c2_`d'' \\"
+file write file13 _n "& (`se_c1_`d'') & (`se_c2_`d'') \\"
 
 	if `i' < `num' {
-		file write file13 _n "& & & & & &\\"	
+		file write file13 _n "& & \\"	
 	}
 	local i = `i' + 1
 }	

@@ -41,7 +41,7 @@ xtset child test_num
 
 **SPILLOVER HISPANICS
 
-local distance "1000 5000 10000 15000 20000"
+local distance "500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000"
 local num : list sizeof local(distance)
 local i = 1
 
@@ -59,39 +59,17 @@ file write file8 _n "\begin{table}[H]\centering \caption{\small Spillover Effect
 file write file8 _n "\begin{tabular}{lccc|ccc}"
 file write file8 _n "\toprule"
 file write file8 _n "\midrule"
-file write file8 _n "& \multicolumn{3}{c}{Cognitive Scores} & \multicolumn{3}{c}{Non-cognitive Scores}\\ \cline{2-7}"
-file write file8 _n "& Pooled OLS & Fixed Effect & Random Effect & Pooled OLS & Fixed Effect & Random Effect\\"
-file write file8 _n "$ d $ (meters) & (1) & (2) & (3) & (4) & (5) & (6)\\"
+file write file8 _n "& \multicolumn{1}{c}{Cognitive Scores} & \multicolumn{1}{c}{Non-cognitive Scores}\\ \cline{2-7}"
+file write file8 _n "& Fixed Effect & Fixed Effect \\"
+file write file8 _n "$ d $ (meters) & (1) & (2) \\"
 file write file8 _n "\midrule"
-file write file8 _n "& \multicolumn{6}{c}{Control Hispanics}\\ \cline{2-7}"
+file write file8 _n "& \multicolumn{2}{c}{Control Hispanics}\\ \cline{2-7}"
 
 **Running Regressions for Hispanics	
 
 foreach d of local distance  {	
 	local j = 1
-	foreach assess in cog ncog {
-	***POOLED OLS
-	quietly reg std_`assess' percent_treated_`d' std_cog_pre std_ncog_pre distto1 distto2 i.gender_num i.year i.blockgroup_num i.test_num age_pre if (has_`assess' == 1 & race_num == 2), cluster(child)
-	
-	matrix d = r(table) 
-
-	*adding stars
-		if d[4,1] < 0.01 {
-			local item_`j'_`d' = string(round(_b[percent_treated_`d'], .0001), "%13.0gc") + "***"
-		}
-		else if d[4,1] < 0.05 & d[4,1] >= 0.01 {
-			local item_`j'_`d' = string(round(_b[percent_treated_`d'], .0001), "%13.0gc") + "**"
-		}
-		else if d[4,1] < 0.1 & d[4,1] >= 0.05 {
-			local item_`j'_`d' = string(round(_b[percent_treated_`d'], .0001), "%13.0gc") + "*"
-		}
-		else {
-			local item_`j'_`d' = string(round(_b[percent_treated_`d'], .0001), "%13.0gc")
-		}		
-		
-		local se_`j'_`d' = string(round(_se[percent_treated_`d'], .0001), "%13.0gc")
-		
-		local j = `j' + 1 
+	foreach assess in cog ncog { 
 
 	***FIXED EFFECTS
 	quietly xtreg std_`assess' percent_treated_`d' i.test_num if (has_`assess' == 1 & race_num == 2), fe cluster(child) 
@@ -116,47 +94,25 @@ foreach d of local distance  {
 		
 		local j = `j' + 1
 
-
-	***RANDOM EFFECTS
-	quietly xtreg std_`assess' percent_treated_`d' std_cog_pre std_ncog_pre distto1 distto2 i.gender_num i.year i.blockgroup_num i.test_num age_pre if (has_`assess' == 1 & race_num == 2), re cluster(child) 
-	matrix d = r(table) 
-
-	*adding stars
-		if d[4,1] < 0.01 {
-			local item_`j'_`d' = string(round(_b[percent_treated_`d'], .0001), "%13.0gc") + "***"
-		}
-		else if d[4,1] < 0.05 & d[4,1] >= 0.01 {
-			local item_`j'_`d' = string(round(_b[percent_treated_`d'], .0001), "%13.0gc") + "**"
-		}
-		else if d[4,1] < 0.1 & d[4,1] >= 0.05 {
-			local item_`j'_`d' = string(round(_b[percent_treated_`d'], .0001), "%13.0gc") + "*"
-		}
-		else {
-			local item_`j'_`d' = string(round(_b[percent_treated_`d'], .0001), "%13.0gc")
-		}		
-		
-		local se_`j'_`d' = string(round(_se[percent_treated_`d'], .0001), "%13.0gc")
-		
-		local j = `j' + 1
 	}
 
-	file write file8 _n "\multirow{2}{*}{`d'} & `item_1_`d'' & `item_2_`d'' & `item_3_`d''  & `item_4_`d'' & `item_5_`d'' & `item_6_`d''\\"
-	file write file8 _n "& (`se_1_`d'') & (`se_2_`d'') & (`se_3_`d'') & (`se_4_`d'') & (`se_5_`d'') & (`se_6_`d'')\\"
+	file write file8 _n "\multirow{2}{*}{`d'} & `item_1_`d'' & `item_2_`d'' \\"
+	file write file8 _n "& (`se_1_`d'') & (`se_2_`d'') \\"
 
 	if `i' < `num' {
-		file write file8 _n "& & & & & &\\"	
+		file write file8 _n "& & \\"	
 	}
 	local i = `i' + 1
 }
 
-file write file8 _n "& \multicolumn{6}{c}{}\\"
-file write file8 _n "& \multicolumn{6}{c}{Control Blacks}\\ \cline{2-7}"
+file write file8 _n "& \multicolumn{2}{c}{}\\"
+file write file8 _n "& \multicolumn{2}{c}{Control Blacks}\\ \cline{2-7}"
 
 
 ** SPILL-OVER BLACKS
 
 
-local distance "1000 5000 10000 15000 20000"
+local distance "500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000"
 local num : list sizeof local(distance)
 local i = 1
 
@@ -165,28 +121,7 @@ local i = 1
 foreach d of local distance  {	
 	local j = 1
 	foreach assess in cog ncog {
-	***POOLED OLS
-	quietly reg std_`assess' percent_treated_`d' std_cog_pre std_ncog_pre distto1 distto2 i.gender_num i.year i.blockgroup_num i.test_num age_pre if (has_`assess' == 1 & race_num == 1), cluster(child)
 	
-	matrix d = r(table) 
-
-	*adding stars
-		if d[4,1] < 0.01 {
-			local item_`j'_`d' = string(round(_b[percent_treated_`d'], .0001), "%13.0gc") + "***"
-		}
-		else if d[4,1] < 0.05 & d[4,1] >= 0.01 {
-			local item_`j'_`d' = string(round(_b[percent_treated_`d'], .0001), "%13.0gc") + "**"
-		}
-		else if d[4,1] < 0.1 & d[4,1] >= 0.05 {
-			local item_`j'_`d' = string(round(_b[percent_treated_`d'], .0001), "%13.0gc") + "*"
-		}
-		else {
-			local item_`j'_`d' = string(round(_b[percent_treated_`d'], .0001), "%13.0gc")
-		}		
-		
-		local se_`j'_`d' = string(round(_se[percent_treated_`d'], .0001), "%13.0gc")
-		
-		local j = `j' + 1 
 
 	***FIXED EFFECTS
 	quietly xtreg std_`assess' percent_treated_`d' i.test_num if (has_`assess' == 1 & race_num == 1), fe cluster(child) 
@@ -211,35 +146,13 @@ foreach d of local distance  {
 		
 		local j = `j' + 1
 
-
-	***RANDOM EFFECTS
-	quietly xtreg std_`assess' percent_treated_`d' std_cog_pre std_ncog_pre distto1 distto2 i.gender_num i.year i.blockgroup_num i.test_num age_pre if (has_`assess' == 1 & race_num == 1), re cluster(child) 
-	matrix d = r(table) 
-
-	*adding stars
-		if d[4,1] < 0.01 {
-			local item_`j'_`d' = string(round(_b[percent_treated_`d'], .0001), "%13.0gc") + "***"
-		}
-		else if d[4,1] < 0.05 & d[4,1] >= 0.01 {
-			local item_`j'_`d' = string(round(_b[percent_treated_`d'], .0001), "%13.0gc") + "**"
-		}
-		else if d[4,1] < 0.1 & d[4,1] >= 0.05 {
-			local item_`j'_`d' = string(round(_b[percent_treated_`d'], .0001), "%13.0gc") + "*"
-		}
-		else {
-			local item_`j'_`d' = string(round(_b[percent_treated_`d'], .0001), "%13.0gc")
-		}		
-		
-		local se_`j'_`d' = string(round(_se[percent_treated_`d'], .0001), "%13.0gc")
-		
-		local j = `j' + 1
 	}
 
-	file write file8 _n "\multirow{2}{*}{`d'} & `item_1_`d'' & `item_2_`d'' & `item_3_`d''  & `item_4_`d'' & `item_5_`d'' & `item_6_`d''\\"
-	file write file8 _n "& (`se_1_`d'') & (`se_2_`d'') & (`se_3_`d'') & (`se_4_`d'') & (`se_5_`d'') & (`se_6_`d'')\\"
+	file write file8 _n "\multirow{2}{*}{`d'} & `item_1_`d'' & `item_2_`d'' \\"
+	file write file8 _n "& (`se_1_`d'') & (`se_2_`d'') \\"
 
 	if `i' < `num' {
-		file write file8 _n "& & & & & &\\"	
+		file write file8 _n "& & \\"	
 	}
 	local i = `i' + 1
 }
