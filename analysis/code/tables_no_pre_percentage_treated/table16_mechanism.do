@@ -27,7 +27,7 @@ keep if _merge == 3
 drop _merge
 
 **Defining Percent Parent Treated and Percent Child Treated
-foreach distance in 500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000 {
+foreach d in 500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000 {
 gen percent_parent_treated_`d' = ((cash_`d'+ college_`d') / (treated_`d' + control_`d'))*100
 gen percent_child_treated_`d' = ((cogx_`d' + preschool_`d' + kinderprep_`d' + pka_`d' + pkb_`d')/ (treated_`d' + control_`d'))*100
 }
