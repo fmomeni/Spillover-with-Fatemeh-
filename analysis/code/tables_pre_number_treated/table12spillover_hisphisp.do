@@ -91,7 +91,7 @@ file write file9 _n	"\begin{document}"
 file write file9 _n "\begin{table}[h]\centering" 
 
 file write file9 _n "\caption{Spillover From Hispanic to Hispanic} \scalebox{0.92} {\label{tab:results_hispanics} \begin{threeparttable}"
-file write file9 _n "\begin{tabular}{lccc|ccc}"
+file write file9 _n "\begin{tabular}{lc|c}"
 file write file9 _n "\toprule"
 file write file9 _n "\midrule"
 file write file9 _n "& \multicolumn{1}{c}{Cognitive Scores} & \multicolumn{1}{c}{Non-cognitive Scores}\\ \cline{2-7}"

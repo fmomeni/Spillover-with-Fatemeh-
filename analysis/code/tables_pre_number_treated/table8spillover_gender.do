@@ -65,7 +65,7 @@ file write file5 _n "\userpackage[flushleft]{threeparttable}"
 file write file5 _n	"\begin{document}"
 
 file write file5 _n "\begin{table}[H]\centering \caption{\small Spillover Effects by Gender  }  \scalebox{1}{\label{tab:results_gender} \begin{threeparttable}" 
-file write file5 _n "\begin{tabular}{lccc|ccc}"
+file write file5 _n "\begin{tabular}{lc|c}"
 file write file5 _n "\toprule"
 file write file5 _n "\midrule"
 file write file5 _n "& \multicolumn{1}{c}{Cognitive Scores} & \multicolumn{1}{c}{Non-cognitive Scores}\\ \cline{2-7}"

@@ -63,7 +63,7 @@ file write file8 _n "\userpackage[flushleft]{threeparttable}"
 file write file8 _n	"\begin{document}"
 
 file write file8 _n "\begin{table}[H]\centering \caption{\small Spillover Effects by Race  }  \scalebox{1}{\label{tab:results_race} \begin{threeparttable}" 
-file write file8 _n "\begin{tabular}{lccc|ccc}"
+file write file8 _n "\begin{tabular}{lc|c}"
 file write file8 _n "\toprule"
 file write file8 _n "\midrule"
 file write file8 _n "& \multicolumn{1}{c}{Cognitive Scores} & \multicolumn{1}{c}{Non-cognitive Scores}\\ \cline{2-7}"
