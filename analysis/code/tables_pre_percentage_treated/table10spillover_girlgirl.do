@@ -76,7 +76,7 @@ file write file7 _n	"\begin{document}"
 file write file7 _n "\begin{table}[h]\centering" 
 
 file write file7 _n "\caption{Spillover From Girls to  Girls} \scalebox{0.92} {\label{tab:results_girls} \begin{threeparttable}"
-file write file7 _n "\begin{tabular}{lccc|ccc}"
+file write file7 _n "\begin{tabular}{lc|c}"
 file write file7 _n "\toprule"
 file write file7 _n "\midrule"
 file write file7 _n "& \multicolumn{1}{c}{Cognitive Scores} & \multicolumn{1}{c}{Non-cognitive Scores}\\ \cline{2-7}"
