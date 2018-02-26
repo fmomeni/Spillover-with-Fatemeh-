@@ -62,7 +62,7 @@ file write file4 _n "\begin{table}[h]\centering"
 
 file write file4 _n "\begin{threeparttable}"
 file write file4 _n "\caption{Spillover on Cognitive and Non-cognitive Scores} \label{tab:results_all}"
-file write file4 _n "\begin{tabular}{lccc|ccc}"
+file write file4 _n "\begin{tabular}{lc|c}"
 file write file4 _n "\toprule"
 file write file4 _n "\midrule"
 file write file4 _n "& \multicolumn{1}{c}{Cognitive Scores} & \multicolumn{1}{c}{Non-cognitive Scores}\\ \cline{2-7}"
