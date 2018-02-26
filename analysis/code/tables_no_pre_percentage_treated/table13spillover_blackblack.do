@@ -77,7 +77,7 @@ file write file10 _n	"\begin{document}"
 file write file10 _n "\begin{table}[h]\centering" 
 
 file write file10 _n "\caption{Spillover From Black to Black} \scalebox{0.92} {\label{tab:results_blacks} \begin{threeparttable}"
-file write file10 _n "\begin{tabular}{lccc|ccc}"
+file write file10 _n "\begin{tabular}{lc|c}"
 file write file10 _n "\toprule"
 file write file10 _n "\midrule"
 file write file10 _n "& \multicolumn{1}{c}{Cognitive Scores} & \multicolumn{1}{c}{Non-cognitive Scores}\\ \cline{2-7}"

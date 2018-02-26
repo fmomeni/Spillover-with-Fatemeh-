@@ -661,13 +661,12 @@ use newv_table34_unique_data_clean
 **Merging with number of neighbours
 
 merge 1:1 child test year using merged_neigh_count
-keep if _merge == 3
 
-**Some observations from the master file are not matched to the using file as those kids did not have any neighbors living in a radius
-**smaller than 20,000
+**Drop kids not pertaining to our analytical sample
+drop if _merge == 2
 
 drop _merge
-foreach distance in foreach distance in 500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000 {
+foreach distance in 500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000 {
 gen percent_treated_`distance' = (treated_`distance' / (treated_`distance' + control_`distance'))*100
 }
 
@@ -962,7 +961,7 @@ file write file4 _n "\begin{table}[h]\centering"
 
 file write file4 _n "\begin{threeparttable}"
 file write file4 _n "\caption{Spillover on Cognitive and Non-cognitive Scores} \label{tab:results_all}"
-file write file4 _n "\begin{tabular}{lccc|ccc}"
+file write file4 _n "\begin{tabular}{lc|c}"
 file write file4 _n "\toprule"
 file write file4 _n "\midrule"
 file write file4 _n "& \multicolumn{1}{c}{Cognitive Scores} & \multicolumn{1}{c}{Non-cognitive Scores}\\ \cline{2-7}"
@@ -1087,7 +1086,7 @@ file write file5 _n "\userpackage[flushleft]{threeparttable}"
 file write file5 _n	"\begin{document}"
 
 file write file5 _n "\begin{table}[H]\centering \caption{\small Spillover Effects by Gender  }  \scalebox{1}{\label{tab:results_gender} \begin{threeparttable}" 
-file write file5 _n "\begin{tabular}{lccc|ccc}"
+file write file5 _n "\begin{tabular}{lc|c}"
 file write file5 _n "\toprule"
 file write file5 _n "\midrule"
 file write file5 _n "& \multicolumn{1}{c}{Cognitive Scores} & \multicolumn{1}{c}{Non-cognitive Scores}\\ \cline{2-7}"
@@ -1297,7 +1296,7 @@ file write file6 _n	"\begin{document}"
 file write file6 _n "\begin{table}[h]\centering" 
 
 file write file6 _n "\caption{Spillover From Boys to  Boys} \scalebox{0.92} {\label{tab:results_boys} \begin{threeparttable}"
-file write file6 _n "\begin{tabular}{lccc|ccc}"
+file write file6 _n "\begin{tabular}{lc|c}"
 file write file6 _n "\toprule"
 file write file6 _n "\midrule"
 file write file6 _n "& \multicolumn{1}{c}{Cognitive Scores} & \multicolumn{1}{c}{Non-cognitive Scores}\\ \cline{2-7}"
@@ -1440,7 +1439,7 @@ file write file7 _n	"\begin{document}"
 file write file7 _n "\begin{table}[h]\centering" 
 
 file write file7 _n "\caption{Spillover From Girls to  Girls} \scalebox{0.92} {\label{tab:results_girls} \begin{threeparttable}"
-file write file7 _n "\begin{tabular}{lccc|ccc}"
+file write file7 _n "\begin{tabular}{lc|c}"
 file write file7 _n "\toprule"
 file write file7 _n "\midrule"
 file write file7 _n "& \multicolumn{1}{c}{Cognitive Scores} & \multicolumn{1}{c}{Non-cognitive Scores}\\ \cline{2-7}"
@@ -1567,7 +1566,7 @@ file write file8 _n "\userpackage[flushleft]{threeparttable}"
 file write file8 _n	"\begin{document}"
 
 file write file8 _n "\begin{table}[H]\centering \caption{\small Spillover Effects by Race  }  \scalebox{1}{\label{tab:results_race} \begin{threeparttable}" 
-file write file8 _n "\begin{tabular}{lccc|ccc}"
+file write file8 _n "\begin{tabular}{lc|c}"
 file write file8 _n "\toprule"
 file write file8 _n "\midrule"
 file write file8 _n "& \multicolumn{1}{c}{Cognitive Scores} & \multicolumn{1}{c}{Non-cognitive Scores}\\ \cline{2-7}"
@@ -1777,7 +1776,7 @@ file write file9 _n	"\begin{document}"
 file write file9 _n "\begin{table}[h]\centering" 
 
 file write file9 _n "\caption{Spillover From Hispanic to Hispanic} \scalebox{0.92} {\label{tab:results_hispanics} \begin{threeparttable}"
-file write file9 _n "\begin{tabular}{lccc|ccc}"
+file write file9 _n "\begin{tabular}{lc|c}"
 file write file9 _n "\toprule"
 file write file9 _n "\midrule"
 file write file9 _n "& \multicolumn{1}{c}{Cognitive Scores} & \multicolumn{1}{c}{Non-cognitive Scores}\\ \cline{2-7}"
@@ -1920,7 +1919,7 @@ file write file10 _n	"\begin{document}"
 file write file10 _n "\begin{table}[h]\centering" 
 
 file write file10 _n "\caption{Spillover From Black to Black} \scalebox{0.92} {\label{tab:results_blacks} \begin{threeparttable}"
-file write file10 _n "\begin{tabular}{lccc|ccc}"
+file write file10 _n "\begin{tabular}{lc|c}"
 file write file10 _n "\toprule"
 file write file10 _n "\midrule"
 file write file10 _n "& \multicolumn{1}{c}{Cognitive Scores} & \multicolumn{1}{c}{Non-cognitive Scores}\\ \cline{2-7}"
@@ -2325,7 +2324,7 @@ file write file13 _n "\userpackage[flushleft]{threeparttable}"
 file write file13 _n	"\begin{document}"
 
 file write file13 _n "\begin{table}[H]\centering \caption{The Effect from Parent vs. Child Programs}  \scalebox{.99}{\label{tab:treatments}  \begin{threeparttable}"
-file write file13 _n "\begin{tabular}{cccc|ccc}"
+file write file13 _n "\begin{tabular}{cc|c}"
 file write file13 _n "\toprule"
 file write file13 _n "\midrule"
 file write file13 _n "& \multicolumn{1}{c}{Cognitive Scores} & \multicolumn{1}{c}{Non-cognitive Scores}\\ \cline{2-7}"

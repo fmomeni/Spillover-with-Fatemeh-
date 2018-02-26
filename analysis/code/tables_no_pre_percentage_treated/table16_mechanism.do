@@ -77,7 +77,7 @@ file write file13 _n "\userpackage[flushleft]{threeparttable}"
 file write file13 _n	"\begin{document}"
 
 file write file13 _n "\begin{table}[H]\centering \caption{The Effect from Parent vs. Child Programs}  \scalebox{.99}{\label{tab:treatments}  \begin{threeparttable}"
-file write file13 _n "\begin{tabular}{cccc|ccc}"
+file write file13 _n "\begin{tabular}{cc|c}"
 file write file13 _n "\toprule"
 file write file13 _n "\midrule"
 file write file13 _n "& \multicolumn{1}{c}{Cognitive Scores} & \multicolumn{1}{c}{Non-cognitive Scores}\\ \cline{2-7}"
