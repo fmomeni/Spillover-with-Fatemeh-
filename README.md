@@ -9,17 +9,18 @@ Novemeber/December 2017: Analyses have been re-done with the updated neighbor co
 
 January/February 2018: I have created new datasets for neighbors by race and gender. Also additional specifications have been run:
 
--use as treatment variable number of treated neighbors (rather than the initial proportion of treated neighbors) and control for total number of neighbors
--use as treatment variables number of treated neighbors but exclude pre-assessment periodm also controlling for total number of neighbors
--use as treatment variable proportion of treated neighbors, but exclude pre-assessment period
+1)use as treatment variable number of treated neighbors (rather than the initial proportion of treated neighbors) and control for total number of neighbors
+2)use as treatment variables number of treated neighbors but exclude pre-assessment periodm also controlling for total number of neighbors
+3)use as treatment variable proportion of treated neighbors, but exclude pre-assessment period
 
 March 2018: I have added data on parental attendance of parent academy sessions and looked at differential rates of attendance between cogX and parent academy kids. 
 
 April 2018: I have created additional variables:
 
--length of exposure to treatment/control since entering treatment/control
--average cog and non-cog performance of neighbors at the closest date of an assessment for an origin kid, but this date cannot coincide with the assessment date of the origin kid (version1)
--average cog and non-cog performance of neighbors at the closest date of an assessment for an origin kid, this date can coincide with the assessment date of the origin kid (version2)
+1)length of exposure to treatment/control since entering treatment/control
+2)average cog and non-cog performance of neighbors at the closest date of an assessment for an origin kid, but this date cannot coincide with the assessment date of the origin kid (version1)
+3)average cog and non-cog performance of neighbors at the closest date of an assessment for an origin kid, this date can coincide with the assessment date of the origin kid (version2)
+4) I have added indicators whether children are at kindergarten/school age for each of the assessment at pre, mid, post, etc.
 
 I also updated neighbor counts for origin kids that were randomised into kinderprep.
 
