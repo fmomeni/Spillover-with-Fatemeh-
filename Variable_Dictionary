@@ -15,3 +15,4 @@ CK_pretreat = 1 if CK == 1 AND observation occurs before a subject receives kind
 
 first_random - first year of randomisation type of treatment observation
 second_random - second year of randomisation type of treatment observation
+third_random - third year of randomisation type of treatment observation
