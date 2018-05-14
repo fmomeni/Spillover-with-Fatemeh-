@@ -9,3 +9,13 @@ foreach file in create_table34 create_table56 create_main_table7 table8spillover
 	do "`file'".do
 }
 }
+
+
+//run all files in folder 
+foreach folder in treat_tables_pre_number_treated treat_tables_no_pre_number_treated treat_tables_pre_percentage_treated treat_tables_no_pre_percentage_treated {
+foreach file in create_main_table7 table8spillover_gender table9spillover_boyboy table10spillover_girlgirl table11spillover_race table11a table12spillover_hisphisp table13spillover_blackblack table16_mechanism {
+	cd "$repository/analysis/code/`folder'"
+	do "`file'".do
+}
+}
+
