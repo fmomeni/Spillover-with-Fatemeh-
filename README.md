@@ -31,7 +31,9 @@ Each of the subfolders on this github repository contains a "run_directory.do" f
 
 Here is a description of the files contained in this main folder: 
 
-run_project.do builds the necessary data sets and conducts the analysis in the correct order. It is the one stop button for everything.
+"parent_academy_attendance" is a self-contained folder that analyses differential attendance at parent academy sessions between "parent academy" treatment in 2010 and 2011 and "prek" treatment in 2012 and 2013.
+
+"run_project.do" builds the necessary data sets for the Spill-Over and conducts the analyses in the correct order. It is the one stop button for everything (except for the parent attendance analysis which is separate!).
 IMPORTANT: Before running the "run_project" do file, make sure you change to the directory to which you cloned the repository on your local computer!!
 
 The "data" folder is empty. When cloning the repository to the local computer, the user should include the raw data files in the "pre_made" subfolder of the "data" folder. The raw data files for the "pre_made" subfolder can be found in the shared Spillover DropBox folder! These pre_made files are the data I was given before starting to work on the project by myself. The "generated" subfolder will remain initially empty and it will progressively keep getting filled as new data sets are being generated.
@@ -42,7 +44,7 @@ The "build_datasets" folder contains dofiles designed to build the data sets for
 
 "Variable_dictionary" contains explanations for the relevant variables used in the analysis.
 
-Finally, "parent_academy_attendance" is a self-contained folder that analyses differential attendance at parent academy sessions between "parent academy" treatment in 2010 and 2011 and "prek" treatment in 2012 and 2013.
+
 
 
 
