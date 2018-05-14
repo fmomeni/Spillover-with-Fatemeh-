@@ -43,7 +43,7 @@ The "build_datasets" folder contains dofiles designed to build the data sets for
 The "analysis" folder contains two subfolders, "code" and "tables". The "code" subfolder contains codes for the different tables contained in the paper. Each dofile contains more information on the content of the table. All sub-sub-folders prefixed with "treat" contain the code for analysing the spillover effect of treated neighbors on treated origin kids. The rest of the subfolders study the spillover effect of treated neighbors on control origin kids. The "tables" subfolder remains initially empty. It gets filled as new tables are being generated. The name of the table corresponds to the name of its associated dofile.
 
 
-"Variable_dictionary" contains explanations for the relevant variables used in the analysis.
+"Variable_dictionary" contains explanations for the relevant variables used in the analysis
 
 
 
