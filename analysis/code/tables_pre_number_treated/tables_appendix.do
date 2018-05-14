@@ -9,7 +9,6 @@ use updated_unique_data_clean
 sort child year
 
 cd "$repository/data_sets/generated"
-
 ********************************************************************************
 *************Re-Coding Kinderprep Scores****************************************
 ********************************************************************************
@@ -51,14 +50,150 @@ foreach period in pre mid post sl ao_y1 ao_y2 ao_y3 ao_y4 ao_y5 ao_y6 {
 	}
 }
 
-****************************************************************
-***INCLUDE THE SAME STEPS IN CONSTRUCTING THE FINAL SAMPLE******
-****************************************************************
+
+********************************************************************************
+*************Define Age Variables for Entry in Kindergarten and School**********
+********************************************************************************
+
+
+
+
+**Age Variable for School Entry
+
+foreach year in 2010 2011 2012 2013 2014 2015 2016 2017 2018 {
+
+gen age_begin_syear`year' = mofd(date("08/17/`year'", "MDY") - birthday)
+
+}
+
+
+
+foreach period in pre mid post sl {
+
+gen school_age_`period' = .
+
+	foreach year in 2010 2011 2012 2013 {
+	
+	replace school_age_`period' = age_begin_syear`year' if year == "`year'"
+
+	}
+	
+}
+
+
+foreach period in ao_y1 ao_y2 ao_y3 ao_y4 ao_y5 {
+
+gen school_age_`period' = .
+
+	foreach year in 2010 2011 2012 2013 {
+	
+	if "`period'" == "ao_y1" {
+	
+	local year1 = `year' + 1
+	replace school_age_`period' = age_begin_syear`year1' if year == "`year'"	
+	}
+	
+	else if "`period'" == "ao_y2" {
+	
+	local year2 = `year' + 2
+	replace school_age_`period' = age_begin_syear`year2' if year == "`year'"	
+	}
+	
+	else if "`period'" == "ao_y3" {
+	
+	local year3 = `year' + 3
+	replace school_age_`period' = age_begin_syear`year3' if year == "`year'"	
+	}
+	
+	else if "`period'" == "ao_y4" {
+	
+	local year4 = `year' + 4
+	replace school_age_`period' = age_begin_syear`year4' if year == "`year'"	
+	}
+	
+	else if "`period'" == "ao_y5" {
+	
+	local year5 = `year' + 5
+	replace school_age_`period' = age_begin_syear`year5' if year == "`year'"	
+	}
+	
+	}
+}
+
+**Age Variable for Kindergarten Entry
+
+foreach year in 2010 2011 2012 2013 2014 2015 2016 2017 2018 {
+
+gen age_begin_kyear`year' = mofd(date("09/01/`year'", "MDY") - birthday)
+
+}
+
+
+
+foreach period in pre mid post sl {
+
+gen kinder_age_`period' = .
+
+	foreach year in 2010 2011 2012 2013 {
+	
+	replace kinder_age_`period' = age_begin_kyear`year' if year == "`year'"
+
+	}
+	
+}
+
+
+foreach period in ao_y1 ao_y2 ao_y3 ao_y4 ao_y5 {
+
+gen kinder_age_`period' = .
+
+	foreach year in 2010 2011 2012 2013 {
+	
+	if "`period'" == "ao_y1" {
+	
+	local year1 = `year' + 1
+	replace kinder_age_`period' = age_begin_kyear`year1' if year == "`year'"	
+	}
+	
+	else if "`period'" == "ao_y2" {
+	
+	local year2 = `year' + 2
+	replace kinder_age_`period' = age_begin_kyear`year2' if year == "`year'"	
+	}
+	
+	else if "`period'" == "ao_y3" {
+	
+	local year3 = `year' + 3
+	replace kinder_age_`period' = age_begin_kyear`year3' if year == "`year'"	
+	}
+	
+	else if "`period'" == "ao_y4" {
+	
+	local year4 = `year' + 4
+	replace kinder_age_`period' = age_begin_kyear`year4' if year == "`year'"	
+	}
+	
+	else if "`period'" == "ao_y5" {
+	
+	local year5 = `year' + 5
+	replace kinder_age_`period' = age_begin_kyear`year5' if year == "`year'"	
+	}
+	
+	}
+}
+
+
+
+
+
 
 ********************************************************************************
 *************Defining Multiple-Year Treatment Status****************************
 ********************************************************************************
 
+
+**Dropping all observations for kinderpreps in 2011
+drop if year == "2011" & treatment == "kinderprep"
 
 **Identifying the observations for mislabeled kids who were first in treatment
 **but then incorrectly labelled as "control" in second year of randomisation 
@@ -154,14 +289,14 @@ egen num_ncog_beyond_pre = rowtotal(has_ncog_mid has_ncog_post has_ncog_sl has_n
 
 ///Creating a panel
 
-keep year child treatment has_wjl_* has_wjs_* has_wja_* has_wjq_* has_card_* has_ppvt_* has_psra_* has_ospan_* has_same_* has_spatial_* has_cog_* has_ncog_* wjl_* wjs_* wja_* wjq_* card_* ppvt_* psra_* ospan_* same_* spatial_* cog_* ncog_* std_wjl_* std_wjs_* std_wja_* std_wjq_* std_card_* std_ppvt_* std_psra_* std_ospan_* std_same_* std_spatial_* std_cog_* std_ncog_* gender aid_unemployment_pre race age_pre hh_income_pre mother_education_pre father_education_pre no_cog_pre no_ncog_pre num_cog_beyond_pre num_ncog_beyond_pre first_random second_random third_random CC CT CK T K TT TTT TK C 
+keep year child treatment kinder_age_* school_age_* has_wjl_* has_wjs_* has_wja_* has_wjq_* has_card_* has_ppvt_* has_psra_* has_ospan_* has_same_* has_spatial_* has_cog_* has_ncog_* wjl_* wjs_* wja_* wjq_* card_* ppvt_* psra_* ospan_* same_* spatial_* cog_* ncog_* std_wjl_* std_wjs_* std_wja_* std_wjq_* std_card_* std_ppvt_* std_psra_* std_ospan_* std_same_* std_spatial_* std_cog_* std_ncog_* gender aid_unemployment_pre race age_pre hh_income_pre mother_education_pre father_education_pre no_cog_pre no_ncog_pre num_cog_beyond_pre num_ncog_beyond_pre first_random second_random third_random CC CT CK T K TT TTT TK C 
 
 drop  *ao_5yo *ao_6yo *ao_7yo *maximum* *or_tvip* *y12 *y34
 
 order has_wjl_* has_wjs_* has_wja_* has_wjq_* has_card_* has_ppvt_* has_psra_* has_ospan_* has_same_* has_spatial_* has_cog_* has_ncog_* wjl_* wjs_* wja_* wjq_* card_* ppvt_* psra_* ospan_* same_* spatial_* cog_* ncog_* std_wjl_* std_wjs_* std_wja_* std_wjq_* std_card_* std_ppvt_* std_psra_* std_ospan_* std_same_* std_spatial_* std_cog_* std_ncog_*
 
-reshape long has_wjl_@ has_wjs_@ has_wja_@ has_wjq_@ wjl_@ wjs_@ wja_@ wjq_@ has_card_@ card_@ has_ppvt_@ ppvt_@ has_psra_@ psra_@ has_ospan_@ ospan_@ has_same_@ same_@ has_spatial_@ spatial_@ std_ppvt_@ std_wjl_@ std_wja_@ std_wjs_@ std_wjq_@ std_psra_@ std_card_@ std_spatial_@ std_ospan_@ std_same_@  has_cog_@ cog_@ std_cog_@ has_ncog_@ ncog_@ std_ncog_@, i(child year) j(test) s
-	
+reshape long kinder_age_@ school_age_@ has_wjl_@ has_wjs_@ has_wja_@ has_wjq_@ wjl_@ wjs_@ wja_@ wjq_@ has_card_@ card_@ has_ppvt_@ ppvt_@ has_psra_@ psra_@ has_ospan_@ ospan_@ has_same_@ same_@ has_spatial_@ spatial_@ std_ppvt_@ std_wjl_@ std_wja_@ std_wjs_@ std_wjq_@ std_psra_@ std_card_@ std_spatial_@ std_ospan_@ std_same_@  has_cog_@ cog_@ std_cog_@ has_ncog_@ ncog_@ std_ncog_@, i(child year) j(test) s
+
 
 **Dropping all observations for ao_y5, ao_y6
 drop if (test == "ao_y5" | test == "ao_y6")
@@ -187,9 +322,7 @@ drop if test == "basicopposite`x'"
 
 }
 
-unique child
 
-**6154 observations and 1660 unique control kids
 
 **Create CT_pretreatment which is only defined for those who have been randomised twice: first into control and than into treatment (other than kinderprep). 
 **"1" means that the kid has taken this test before undergoing treatment 
@@ -201,9 +334,15 @@ replace CT_pretreat = 0 if CT == 1 & second_random == 1
 **Create CK_prekinder which is only defined for those who have been randomised twice: first into control and than into kinderprep
 **"1" means that the kid has taken this test before undergoing kinderprep 
 gen CK_prekinder = .
-replace CK_prekinder = 1 if CK == 1 & first_random == 1 & (test == "pre" | test == "mid" | test == "post" | test == "sl" | test == "aoy1")
+replace CK_prekinder = 1 if CK == 1 & first_random == 1 & (test == "pre" |test == "mid" | test == "post" | test == "sl" | test == "aoy1")
 replace CK_prekinder = 0 if CK == 1 & first_random == 1 & (test == "aoy2" | test == "aoy3" | test == "aoy4")
 replace CK_prekinder = 0 if CK == 1 & second_random == 1
+
+
+**Generate Indicators for whether kid eligible for kindergarten/school
+
+gen kinder_elig = (kinder_age >= 60)
+gen school_elig = (school_age >= 72)
 
 *****************************
 ****MERGING ON NEIGHBOURS****

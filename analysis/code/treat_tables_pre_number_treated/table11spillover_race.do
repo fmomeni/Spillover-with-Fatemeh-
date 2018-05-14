@@ -28,7 +28,7 @@ egen blockgroup_num = group(blockgroup)
 destring year, replace
 
 **Generated Num Total Neighbors
-foreach distance in 500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000 {
+foreach distance in 500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 {
 gen total_neigh_`distance' = treated_`distance' + control_`distance'
 }
 
