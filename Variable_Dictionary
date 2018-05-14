@@ -16,3 +16,30 @@ CK_pretreat = 1 if CK == 1 AND observation occurs before a subject receives kind
 first_random - first year of randomisation type of treatment observation
 second_random - second year of randomisation type of treatment observation
 third_random - third year of randomisation type of treatment observation
+
+v1cog_contr - average cognitivie score of all control neighbors for whom we have a score (version1)
+v2cog_contr - average cognitivie score of all control neighbors for whom we have a score (version2)
+v1ncog_contr - average non-cognitivie score of all control neighbors for whom we have a score (version1)
+v2ncog_contr - average non-cognitivie score of all control neighbors for whom we have a score (version2)
+  
+v1cog_treat - average cognitivie score of all treated neighbors for whom we have a score (version1)
+v2cog_treat - average cognitivie score of all treated neighbors for whom we have a score (version2)
+v1ncog_treat - average non-cognitivie score of all treated neighbors for whom we have a score (version1)
+v2ncog_treat - average non-cognitivie score of all treated neighbors for whom we have a score (version2)
+
+v1cog_nktreat - average cognitivie score of all treated neighbors (except for kinderprep) for whom we have a score (version1)
+v2cog_nktreat - average cognitivie score of all treated neighbors (except for kinderprep) for whom we have a score (version2)
+v1ncog_nktreat - average non-cognitivie score of all treated neighbors (except for kinderprep) for whom we have a score (version1)
+v2ncog_nktreat - average non-cognitivie score of all treated neighbors (except for kinderprep) for whom we have a score (version2)
+
+month_incontr_contr - average number of months control neighbors have spent in control      
+month_incontr_treat - average number of months treated neighbors have spent in control
+month_incontr_nktreat - average number of months treated neighbors (without kinderprep) have spent in control
+
+month_intreat_treat - average number of months treated neighbors have spent in treatment
+month_intreat_nktreat - average number of months treated neighbors (without kinderprep) have spent in treatment
+month_intreat_contr - average number of months control neighbors have spent in treatment (SHOULD ALWAYS BE EQUAL TO 0)
+
+kinder_elig - equals to 1 if at a particular assessment, kid is eligible to be in kindergarten (i.e., if by August, 17 of the academic year the assessment takes place, the kid was older than 5)
+school_elig - equals to 1 if at a particular assessment, kid is eligible to be in kindergarten (i.e., if by September, 1 of the academic year the assessment takes place, the kid was older than 6)	
+
