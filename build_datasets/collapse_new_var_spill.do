@@ -1,21 +1,19 @@
 *Purpose: count the neighbors by treatment within different distances
-*and create average neighbor performance and average neighb length of being in 
-*treatment and control
 
 clear all
 
 cd "$repository/data_sets/generated"
 
-use multiple_year_neighbor_number_score
+use neighbor_count_by_oriassessments_dummies_Fatemeh_all_years
 
 *set radii
-local distance " 500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000" 
+local distance "250 " 
 
 foreach d of local distance {
 
-	clear all 
-	cd "$repository/data_sets/generated"
-	use multiple_year_neighbor_number_score
+	*clear all 
+	*cd "$repository/data_sets/generated"
+	*use neighbor_count_by_oriassessments_dummies_Fatemeh_all_years
 
 	drop if total_meters > `d'
 
@@ -33,6 +31,7 @@ foreach d of local distance {
 	 aoy5_pkb aoy1_preschool aoy2_preschool aoy3_preschool aoy4_preschool ///
 	 aoy5_preschool aoy1_treated aoy2_treated aoy3_treated aoy4_treated ///
 	 aoy5_treated ///
+     /*
 	 pre_v1std_cog_cash mid_v1std_cog_cash post_v1std_cog_cash sl_v1std_cog_cash aoy1_v1std_cog_cash aoy2_v1std_cog_cash aoy3_v1std_cog_cash aoy4_v1std_cog_cash aoy5_v1std_cog_cash ///
 	 pre_v2std_cog_cash mid_v2std_cog_cash post_v2std_cog_cash sl_v2std_cog_cash aoy1_v2std_cog_cash aoy2_v2std_cog_cash aoy3_v2std_cog_cash aoy4_v2std_cog_cash aoy5_v2std_cog_cash ///
      pre_v1std_cog_cogx mid_v1std_cog_cogx post_v1std_cog_cogx sl_v1std_cog_cogx aoy1_v1std_cog_cogx aoy2_v1std_cog_cogx aoy3_v1std_cog_cogx aoy4_v1std_cog_cogx aoy5_v1std_cog_cogx ///
@@ -105,6 +104,7 @@ foreach d of local distance {
 	 mispre_v2std_ncog_preschool mismid_v2std_ncog_preschool mispost_v2std_ncog_preschool missl_v2std_ncog_preschool misaoy1_v2std_ncog_preschool misaoy2_v2std_ncog_preschool misaoy3_v2std_ncog_preschool misaoy4_v2std_ncog_preschool misaoy5_v2std_ncog_preschool ///
      mispre_v1std_ncog_treated mismid_v1std_ncog_treated mispost_v1std_ncog_treated missl_v1std_ncog_treated misaoy1_v1std_ncog_treated misaoy2_v1std_ncog_treated misaoy3_v1std_ncog_treated misaoy4_v1std_ncog_treated misaoy5_v1std_ncog_treated ///
 	 mispre_v2std_ncog_treated mismid_v2std_ncog_treated mispost_v2std_ncog_treated missl_v2std_ncog_treated misaoy1_v2std_ncog_treated misaoy2_v2std_ncog_treated misaoy3_v2std_ncog_treated misaoy4_v2std_ncog_treated misaoy5_v2std_ncog_treated /// 
+     */
 	 pre_mt_cash mid_mt_cash post_mt_cash sl_mt_cash aoy1_mt_cash aoy2_mt_cash aoy3_mt_cash aoy4_mt_cash aoy5_mt_cash ///
 	 pre_mt_college mid_mt_college post_mt_college sl_mt_college aoy1_mt_college aoy2_mt_college aoy3_mt_college aoy4_mt_college aoy5_mt_college ///
 	 pre_mt_cogx mid_mt_cogx post_mt_cogx sl_mt_cogx aoy1_mt_cogx aoy2_mt_cogx aoy3_mt_cogx aoy4_mt_cogx aoy5_mt_cogx ///
@@ -124,7 +124,44 @@ foreach d of local distance {
 	 pre_mc_preschool mid_mc_preschool post_mc_preschool sl_mc_preschool aoy1_mc_preschool aoy2_mc_preschool aoy3_mc_preschool aoy4_mc_preschool aoy5_mc_preschool ///
 	 pre_mc_treated mid_mc_treated post_mc_treated sl_mc_treated aoy1_mc_treated aoy2_mc_treated aoy3_mc_treated aoy4_mc_treated aoy5_mc_treated,  by (origin_gecc_id randomization_ori) 
 
-
+	 /*
+	 pre_mtv1_cog_cash mid_mtv1_cog_cash post_mtv1_cog_cash sl_mtv1_cog_cash aoy1_mtv1_cog_cash aoy2_mtv1_cog_cash aoy3_mtv1_cog_cash aoy4_mtv1_cog_cash aoy5_mtv1_cog_cash ///
+	 pre_mtv2_cog_cash mid_mtv2_cog_cash post_mtv2_cog_cash sl_mtv2_cog_cash aoy1_mtv2_cog_cash aoy2_mtv2_cog_cash aoy3_mtv2_cog_cash aoy4_mtv2_cog_cash aoy5_mtv2_cog_cash ///
+     pre_mtv1_cog_cogx mid_mtv1_cog_cogx post_mtv1_cog_cogx sl_mtv1_cog_cogx aoy1_mtv1_cog_cogx aoy2_mtv1_cog_cogx aoy3_mtv1_cog_cogx aoy4_mtv1_cog_cogx aoy5_mtv1_cog_cogx ///
+	 pre_mtv2_cog_cogx mid_mtv2_cog_cogx post_mtv2_cog_cogx sl_mtv2_cog_cogx aoy1_mtv2_cog_cogx aoy2_mtv2_cog_cogx aoy3_mtv2_cog_cogx aoy4_mtv2_cog_cogx aoy5_mtv2_cog_cogx ///
+     pre_mtv1_cog_college mid_mtv1_cog_college post_mtv1_cog_college sl_mtv1_cog_college aoy1_mtv1_cog_college aoy2_mtv1_cog_college aoy3_mtv1_cog_college aoy4_mtv1_cog_college aoy5_mtv1_cog_college ///
+	 pre_mtv2_cog_college mid_mtv2_cog_college post_mtv2_cog_college sl_mtv2_cog_college aoy1_mtv2_cog_college aoy2_mtv2_cog_college aoy3_mtv2_cog_college aoy4_mtv2_cog_college aoy5_mtv2_cog_college ///
+     pre_mtv1_cog_control mid_mtv1_cog_control post_mtv1_cog_control sl_mtv1_cog_control aoy1_mtv1_cog_control aoy2_mtv1_cog_control aoy3_mtv1_cog_control aoy4_mtv1_cog_control aoy5_mtv1_cog_control ///
+	 pre_mtv2_cog_control mid_mtv2_cog_control post_mtv2_cog_control sl_mtv2_cog_control aoy1_mtv2_cog_control aoy2_mtv2_cog_control aoy3_mtv2_cog_control aoy4_mtv2_cog_control aoy5_mtv2_cog_control ///
+     pre_mtv1_cog_kinderprep mid_mtv1_cog_kinderprep post_mtv1_cog_kinderprep sl_mtv1_cog_kinderprep aoy1_mtv1_cog_kinderprep aoy2_mtv1_cog_kinderprep aoy3_mtv1_cog_kinderprep aoy4_mtv1_cog_kinderprep aoy5_mtv1_cog_kinderprep ///
+	 pre_mtv2_cog_kinderprep mid_mtv2_cog_kinderprep post_mtv2_cog_kinderprep sl_mtv2_cog_kinderprep aoy1_mtv2_cog_kinderprep aoy2_mtv2_cog_kinderprep aoy3_mtv2_cog_kinderprep aoy4_mtv2_cog_kinderprep aoy5_mtv2_cog_kinderprep ///
+     pre_mtv1_cog_pka mid_mtv1_cog_pka post_mtv1_cog_pka sl_mtv1_cog_pka aoy1_mtv1_cog_pka aoy2_mtv1_cog_pka aoy3_mtv1_cog_pka aoy4_mtv1_cog_pka aoy5_mtv1_cog_pka ///
+	 pre_mtv2_cog_pka mid_mtv2_cog_pka post_mtv2_cog_pka sl_mtv2_cog_pka aoy1_mtv2_cog_pka aoy2_mtv2_cog_pka aoy3_mtv2_cog_pka aoy4_mtv2_cog_pka aoy5_mtv2_cog_pka ///
+     pre_mtv1_cog_pkb mid_mtv1_cog_pkb post_mtv1_cog_pkb sl_mtv1_cog_pkb aoy1_mtv1_cog_pkb aoy2_mtv1_cog_pkb aoy3_mtv1_cog_pkb aoy4_mtv1_cog_pkb aoy5_mtv1_cog_pkb ///
+	 pre_mtv2_cog_pkb mid_mtv2_cog_pkb post_mtv2_cog_pkb sl_mtv2_cog_pkb aoy1_mtv2_cog_pkb aoy2_mtv2_cog_pkb aoy3_mtv2_cog_pkb aoy4_mtv2_cog_pkb aoy5_mtv2_cog_pkb ///
+     pre_mtv1_cog_preschool mid_mtv1_cog_preschool post_mtv1_cog_preschool sl_mtv1_cog_preschool aoy1_mtv1_cog_preschool aoy2_mtv1_cog_preschool aoy3_mtv1_cog_preschool aoy4_mtv1_cog_preschool aoy5_mtv1_cog_preschool ///
+	 pre_mtv2_cog_preschool mid_mtv2_cog_preschool post_mtv2_cog_preschool sl_mtv2_cog_preschool aoy1_mtv2_cog_preschool aoy2_mtv2_cog_preschool aoy3_mtv2_cog_preschool aoy4_mtv2_cog_preschool aoy5_mtv2_cog_preschool ///
+     pre_mtv1_cog_treated mid_mtv1_cog_treated post_mtv1_cog_treated sl_mtv1_cog_treated aoy1_mtv1_cog_treated aoy2_mtv1_cog_treated aoy3_mtv1_cog_treated aoy4_mtv1_cog_treated aoy5_mtv1_cog_treated ///
+	 pre_mtv2_cog_treated mid_mtv2_cog_treated post_mtv2_cog_treated sl_mtv2_cog_treated aoy1_mtv2_cog_treated aoy2_mtv2_cog_treated aoy3_mtv2_cog_treated aoy4_mtv2_cog_treated aoy5_mtv2_cog_treated /// 
+	 pre_mcv1_cog_cash mid_mcv1_cog_cash post_mcv1_cog_cash sl_mcv1_cog_cash aoy1_mcv1_cog_cash aoy2_mcv1_cog_cash aoy3_mcv1_cog_cash aoy4_mcv1_cog_cash aoy5_mcv1_cog_cash ///
+	 pre_mcv2_cog_cash mid_mcv2_cog_cash post_mcv2_cog_cash sl_mcv2_cog_cash aoy1_mcv2_cog_cash aoy2_mcv2_cog_cash aoy3_mcv2_cog_cash aoy4_mcv2_cog_cash aoy5_mcv2_cog_cash ///
+     pre_mcv1_cog_cogx mid_mcv1_cog_cogx post_mcv1_cog_cogx sl_mcv1_cog_cogx aoy1_mcv1_cog_cogx aoy2_mcv1_cog_cogx aoy3_mcv1_cog_cogx aoy4_mcv1_cog_cogx aoy5_mcv1_cog_cogx ///
+	 pre_mcv2_cog_cogx mid_mcv2_cog_cogx post_mcv2_cog_cogx sl_mcv2_cog_cogx aoy1_mcv2_cog_cogx aoy2_mcv2_cog_cogx aoy3_mcv2_cog_cogx aoy4_mcv2_cog_cogx aoy5_mcv2_cog_cogx ///
+     pre_mcv1_cog_college mid_mcv1_cog_college post_mcv1_cog_college sl_mcv1_cog_college aoy1_mcv1_cog_college aoy2_mcv1_cog_college aoy3_mcv1_cog_college aoy4_mcv1_cog_college aoy5_mcv1_cog_college ///
+	 pre_mcv2_cog_college mid_mcv2_cog_college post_mcv2_cog_college sl_mcv2_cog_college aoy1_mcv2_cog_college aoy2_mcv2_cog_college aoy3_mcv2_cog_college aoy4_mcv2_cog_college aoy5_mcv2_cog_college ///
+     pre_mcv1_cog_control mid_mcv1_cog_control post_mcv1_cog_control sl_mcv1_cog_control aoy1_mcv1_cog_control aoy2_mcv1_cog_control aoy3_mcv1_cog_control aoy4_mcv1_cog_control aoy5_mcv1_cog_control ///
+	 pre_mcv2_cog_control mid_mcv2_cog_control post_mcv2_cog_control sl_mcv2_cog_control aoy1_mcv2_cog_control aoy2_mcv2_cog_control aoy3_mcv2_cog_control aoy4_mcv2_cog_control aoy5_mcv2_cog_control ///
+     pre_mcv1_cog_kinderprep mid_mcv1_cog_kinderprep post_mcv1_cog_kinderprep sl_mcv1_cog_kinderprep aoy1_mcv1_cog_kinderprep aoy2_mcv1_cog_kinderprep aoy3_mcv1_cog_kinderprep aoy4_mcv1_cog_kinderprep aoy5_mcv1_cog_kinderprep ///
+	 pre_mcv2_cog_kinderprep mid_mcv2_cog_kinderprep post_mcv2_cog_kinderprep sl_mcv2_cog_kinderprep aoy1_mcv2_cog_kinderprep aoy2_mcv2_cog_kinderprep aoy3_mcv2_cog_kinderprep aoy4_mcv2_cog_kinderprep aoy5_mcv2_cog_kinderprep ///
+     pre_mcv1_cog_pka mid_mcv1_cog_pka post_mcv1_cog_pka sl_mcv1_cog_pka aoy1_mcv1_cog_pka aoy2_mcv1_cog_pka aoy3_mcv1_cog_pka aoy4_mcv1_cog_pka aoy5_mcv1_cog_pka ///
+	 pre_mcv2_cog_pka mid_mcv2_cog_pka post_mcv2_cog_pka sl_mcv2_cog_pka aoy1_mcv2_cog_pka aoy2_mcv2_cog_pka aoy3_mcv2_cog_pka aoy4_mcv2_cog_pka aoy5_mcv2_cog_pka ///
+     pre_mcv1_cog_pkb mid_mcv1_cog_pkb post_mcv1_cog_pkb sl_mcv1_cog_pkb aoy1_mcv1_cog_pkb aoy2_mcv1_cog_pkb aoy3_mcv1_cog_pkb aoy4_mcv1_cog_pkb aoy5_mcv1_cog_pkb ///
+	 pre_mcv2_cog_pkb mid_mcv2_cog_pkb post_mcv2_cog_pkb sl_mcv2_cog_pkb aoy1_mcv2_cog_pkb aoy2_mcv2_cog_pkb aoy3_mcv2_cog_pkb aoy4_mcv2_cog_pkb aoy5_mcv2_cog_pkb ///
+     pre_mcv1_cog_preschool mid_mcv1_cog_preschool post_mcv1_cog_preschool sl_mcv1_cog_preschool aoy1_mcv1_cog_preschool aoy2_mcv1_cog_preschool aoy3_mcv1_cog_preschool aoy4_mcv1_cog_preschool aoy5_mcv1_cog_preschool ///
+	 pre_mcv2_cog_preschool mid_mcv2_cog_preschool post_mcv2_cog_preschool sl_mcv2_cog_preschool aoy1_mcv2_cog_preschool aoy2_mcv2_cog_preschool aoy3_mcv2_cog_preschool aoy4_mcv2_cog_preschool aoy5_mcv2_cog_preschool ///
+     pre_mcv1_cog_treated mid_mcv1_cog_treated post_mcv1_cog_treated sl_mcv1_cog_treated aoy1_mcv1_cog_treated aoy2_mcv1_cog_treated aoy3_mcv1_cog_treated aoy4_mcv1_cog_treated aoy5_mcv1_cog_treated ///
+	 pre_mcv2_cog_treated mid_mcv2_cog_treated post_mcv2_cog_treated sl_mcv2_cog_treated aoy1_mcv2_cog_treated aoy2_mcv2_cog_treated aoy3_mcv2_cog_treated aoy4_mcv2_cog_treated aoy5_mcv2_cog_treated
+	*/
 
 
 
@@ -142,16 +179,21 @@ foreach d of local distance {
 			@_mt_cash @_mt_cogx @_mt_college @_mt_control @_mt_kinderprep @_mt_pka @_mt_pkb @_mt_preschool @_mt_treated ///
 			@_mc_cash @_mc_cogx @_mc_college @_mc_control @_mc_kinderprep @_mc_pka @_mc_pkb @_mc_preschool @_mc_treated, i(origin_gecc_id randomization_ori) j(test) s
 			
+			/*@_mtv1_cog_cash @_mtv1_cog_cogx @_mtv1_cog_college @_mtv1_cog_control @_mtv1_cog_kinderprep @_mtv1_cog_pka @_mtv1_cog_pkb @_mtv1_cog_preschool @_mtv1_cog_treated ///
+			@_mtv2_cog_cash @_mtv2_cog_cogx @_mtv2_cog_college @_mtv2_cog_control @_mtv2_cog_kinderprep @_mtv2_cog_pka @_mtv2_cog_pkb @_mtv2_cog_preschool @_mtv2_cog_treated ///
+			@_mcv1_cog_cash @_mcv1_cog_cogx @_mcv1_cog_college @_mcv1_cog_control @_mcv1_cog_kinderprep @_mcv1_cog_pka @_mcv1_cog_pkb @_mcv1_cog_preschool @_mcv1_cog_treated ///
+			@_mcv2_cog_cash @_mcv2_cog_cogx @_mcv2_cog_college @_mcv2_cog_control @_mcv2_cog_kinderprep @_mcv2_cog_pka @_mcv2_cog_pkb @_mcv2_cog_preschool @_mcv2_cog_treated
+			*/
 	rename _* *
-
+}
 	foreach version in v1 v2 {
 	foreach score in cog ncog {
 	*av_score_control is the average score of all control neighbors for whom we have a score
-	gen `version'`score'_contr =  `version'std_`score'_control / (control - mis_`version'std_`score'_control) 
+	gen `version'av`score'score_control =  `version'std_`score'_control / (control - mis_`version'std_`score'_control) 
 	*av_score_treated is the average score of all treated neighbors for whom we have a score
-	gen `version'`score'_treat = `version'std_`score'_treated / (treated - mis_`version'std_`score'_treated)
+	gen `version'av`score'score_treated = `version'std_`score'_treated / (treated - mis_`version'std_`score'_treated)
 	*av_score_notkindertreated is the average score of all treated neighbors for whom we have a score except for kinderprep
-	gen `version'`score'_nktreat = (`version'std_`score'_treated - `version'std_`score'_kinderprep)/ (treated - kinderprep - mis_`version'std_`score'_treated + mis_`version'std_`score'_kinderprep)
+	gen `version'av`score'score_nktreated = (`version'std_`score'_treated - `version'std_`score'_kinderprep)/ (treated - kinderprep - mis_`version'std_`score'_treated + mis_`version'std_`score'_kinderprep)
 	
 
 	}
@@ -159,23 +201,25 @@ foreach d of local distance {
 
 	*av_month_incontrol is the average number months certain types of neighbors have spent in control : this is defined for
 	*control neighbors, treated neighbors, and treated without kinderprep
-	gen month_incontr_contr = mc_control/control
-	gen month_incontr_treat = mc_treated/treated
-	gen month_incontr_nktreat = (mc_treated - mc_kinderprep)/ (treated - kinderprep)
+	gen av_month_incontrol_control = mc_control/control
+	gen av_month_incontrol_treated = mc_treated/treated
+	gen av_month_incontrol_nktreated = (mc_treated - mc_kinderprep)/ (treated - kinderprep)
 	*av_month_intreat is the average number months certain types of neighbors have spent in treatment : this is defined for
 	*control neighbors, treated neighbors, and treated without kinderprep
-	gen month_intreat_treat = mt_treated/treated
-	gen month_intreat_nktreat = (mt_treated - mt_kinderprep)/ (treated - kinderprep)
-	gen month_intreat_contr = mt_control/control
+	gen av_month_intreat_treated = mt_treated/treated
+	gen av_month_intreat_nkreated = (mt_treated - mt_kinderprep)/ (treated - kinderprep)
+	gen av_month_intreat_control = mt_control/control
 	
 	
 
 	keep origin_gecc_id randomization_ori test cash cogx college control kinderprep pka pkb preschool treated ///
-	v1cog_contr v1cog_treat v1cog_nktreat v1ncog_contr v1ncog_treat v1ncog_nktreat v2cog_contr v2cog_treat v2cog_nktreat v2ncog_contr v2ncog_treat v2ncog_nktreat /// 
-	month_incontr_contr month_incontr_treat month_incontr_nktreat month_intreat_treat month_intreat_nktreat month_intreat_contr
+	v1avcogscore_control v1avncogscore_control v2avcogscore_control v2avncogscore_treated v1avcogscore_treated v1avncogscore_treated v2avcogscore_treated v2avncogscore_treated /// 
+	v1avcogscore_nktreated v1avncogscore_nktreated v2avcogscore_nktreated v2avncogscore_nktreated ///	
+	av_month_incontrol_control av_month_incontrol_treated av_month_incontrol_nktreated ///
+	av_month_intreat_control av_month_intreat_treated av_month_intreat_nktreated 
 	
 
-	foreach var in cash cogx college control kinderprep pka pkb preschool treated v1cog_contr v1cog_treat v1cog_nktreat v1ncog_contr v1ncog_treat v1ncog_nktreat v2cog_contr v2cog_treat v2cog_nktreat v2ncog_treat v2ncog_nktreat month_incontr_contr month_incontr_treat month_incontr_nktreat month_intreat_treat month_intreat_contr month_intreat_nktreat {
+	foreach var in cash-av_month_intreat_nktreated {
 		rename `var' `var'_`d'
 	}
 	

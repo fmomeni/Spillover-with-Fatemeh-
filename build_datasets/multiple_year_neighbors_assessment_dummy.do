@@ -320,6 +320,22 @@ foreach treatment in cash cogx college control kinderprep pka pkb preschool trea
 	
 }
 
+**ALEX ADDED
+**Defining proper dates for origin kinderprep kids!
+foreach treat in cash college control kinderprep pka pkb preschool cogx treated { 
+replace pre_`treat' = post_`treat' if kinderprep_ori == 1   
+* because, for instance, for non-kinderprep kids randomized in 2012, post occurs in May 2013; but that is exactly the same calendar date the pre occurs for kinderprep kidos!
+
+replace post_`treat' = sl_`treat' if kinderprep_ori == 1  
+* because, for instance, for non-kinderprep kids randomized in 2012, post occurs in August 2013; but that is exactly the same calendar date the post occurs for kinderprep kidos!
+
+replace mid_`treat' = post_`treat' if kinderprep_ori == 1  
+* mid assessment does not occur for the kinder preps but we take it to equal the post treated
+replace sl_`treat' = post_`treat' if kinderprep_ori == 1 
+* sl assessment does not occur for the kinder preps but we take it to equal the post treated
+
+}
+
 **tidying
 drop cash2010 college2010 control2010 kinderprep2010 pka2010 pkb2010 preschool2010 cogx2010 treated2010 rando2010 
 drop cash2011 college2011 control2011 kinderprep2011 pka2011 pkb2011 preschool2011 cogx2011 treated2011 rando2011 cash2012 ///

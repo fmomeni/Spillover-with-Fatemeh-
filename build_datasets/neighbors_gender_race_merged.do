@@ -38,6 +38,10 @@ local distance "500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 200
 		keep if gender_destination == "Male"
 		
 		drop if total_meters > `d'
+		
+		
+		
+		
 
 		collapse (sum) pre_cash mid_cash post_cash sl_cash pre_cogx mid_cogx post_cogx ///
 		sl_cogx pre_college mid_college post_college sl_college pre_control mid_control ///
@@ -62,9 +66,11 @@ local distance "500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 200
 		}
 		
 		save neighbors_male_circle_`d', replace
+		
 }
 
-**Create Neighbors by Distance Missing Gender Neighbors
+/*
+**Create Neighbors by Distance Missing Gender Neighbors = NO SUCH OBSERVATIONS!!!!!!!!!!
 local distance "500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000"
 
 	foreach d of local distance {
@@ -75,6 +81,17 @@ local distance "500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 200
 		keep if gender_destination == ""
 		
 		drop if total_meters > `d'
+		
+		count
+		return list
+		local num_observations = r(N)
+		
+		if `num_observations' == 0 {
+		
+		save neighbors_missing_gender_circle_`d', replace
+		}
+		
+		else if `num_observations' > 0 {
 
 		collapse (sum) pre_cash mid_cash post_cash sl_cash pre_cogx mid_cogx post_cogx ///
 		sl_cogx pre_college mid_college post_college sl_college pre_control mid_control ///
@@ -99,7 +116,9 @@ local distance "500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 200
 		}
 		
 		save neighbors_missing_gender_circle_`d', replace
+		}
 }
+*/
 
 **Create Neighbors by Distance Female Neighbors
 local distance "500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000"
@@ -264,7 +283,19 @@ local distance "500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 200
 		keep if race_destination == ""
 		
 		drop if total_meters > `d'
-
+		
+		count
+		return list
+		local num_observations = r(N)
+		
+		if `num_observations' == 0 {
+		
+		save neighbors_missing_race_circle_`d', replace
+		
+		}
+		
+		else if `num_observations' > 0 {
+	
 		collapse (sum) pre_cash mid_cash post_cash sl_cash pre_cogx mid_cogx post_cogx ///
 		sl_cogx pre_college mid_college post_college sl_college pre_control mid_control ///
 		 post_control sl_control pre_kinderprep mid_kinderprep post_kinderprep ///
@@ -288,6 +319,7 @@ local distance "500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 200
 		}
 		
 		save neighbors_missing_race_circle_`d', replace
+		}
 }
 
 **Create Neighbors by Distance White Non-Hispanic Race Neighbors
@@ -333,7 +365,7 @@ local distance "500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 200
 clear all
 cd "$repository/data_sets/generated"
 
-foreach name in male female missing_gender black hispanic white other_race missing_race {
+foreach name in male female black hispanic white other_race missing_race {
 clear all
 cd "$repository/data_sets/generated"
 use neighbors_`name'_circle_500

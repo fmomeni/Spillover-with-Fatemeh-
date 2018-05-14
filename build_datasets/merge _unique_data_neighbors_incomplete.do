@@ -1,4 +1,4 @@
-** FILE FOR REGRESSIONS: merging panel with neighbor counts and average neighbor performance variables
+** FILE FOR REGRESSIONS
 
 clear all
 
@@ -8,13 +8,13 @@ use table34_unique_data_clean
 
 **Merging with number of neighbours
 
-merge 1:1 child test year using merged_neigh_count
+merge 1:1 child test year using merged_neigh_count_incomplete
 
 **Dropping observations not pertaining to our analytical sample
 drop if _merge == 2
 
 drop _merge
-foreach distance in 500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 15000 20000 {
+foreach distance in 500 1000 2000 3000 4000 5000 6000 7000 8000 9000 10000 {
 gen percent_treated_`distance' = (treated_`distance' / (treated_`distance' + control_`distance'))*100
 }
 
@@ -25,4 +25,4 @@ merge m:1 child using `file'
 drop _merge
 } 
 
-save table56_unique_data_clean, replace
+save table56_unique_data_clean_incomplete, replace
