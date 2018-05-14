@@ -1,16 +1,16 @@
 # Spillover-with-Fatemeh-
 
 
-This github project deals with Fatemeh's job market paper that aims at studying spill-over effects of CHECC kids. I inherited the project from Clark on October/November 2017. Here is a brief timeline of the datasets analyses created. The main treatment variable is proportion of treated neighbors.
+This github project deals with Fatemeh's job market paper that aims at studying spill-over effects of CHECC kids. I inherited the project from Clark in October/November 2017. Here is a brief timeline of the datasets and analyses completed. The main treatment variable is number of treated neighbors.
 
-November 2017:  I and Fatemeh found some errors in the initial code for neighbor count after which Fatemeh has made the necessary adjustments and have used her code since. 
+November 2017:  I and Fatemeh found some errors in the initial code for neighbor count after which Fatemeh has made the necessary adjustments and I have used her code since. 
 
-Novemeber/December 2017: Analyses have been re-done with the updated neighbor count
+Novemeber/December 2017: Analyses have been re-done with the updated neighbor count.
 
-January/February 2018: I have created new datasets for neighbors by race and gender. Also additional specifications have been run:
+January/February 2018: I have created new datasets for neighbors by race and gender. Also, additional specifications have been run:
 
 1)use as treatment variable number of treated neighbors (rather than the initial proportion of treated neighbors) and control for total number of neighbors
-2)use as treatment variables number of treated neighbors but exclude pre-assessment periodm also controlling for total number of neighbors
+2)use as treatment variables number of treated neighbors but exclude pre-assessment period also controlling for total number of neighbors
 3)use as treatment variable proportion of treated neighbors, but exclude pre-assessment period
 
 March 2018: I have added data on parental attendance of parent academy sessions and looked at differential rates of attendance between cogX and parent academy kids. 
@@ -28,7 +28,8 @@ May 2018: I have created classroom exposure neighbor counts using teacherease da
 
 Each of the subfolders on this github repository contains a "run_directory.do" file that specifies the order in which each of the dofiles in the given subfolder should be executed. Here is a brief description of the files contained in the present master folder. Each subfolder will contain a readme file with further descritpions and each of the dofiles will contain much more details about the content of the specific code  
 
-Here is a description of the files contained in this folder: 
+
+Here is a description of the files contained in this main folder: 
 
 run_project.do builds the necessary data sets and conducts the analysis in the correct order. It is the one stop button for everything.
 IMPORTANT: Before running the "run_project" do file, make sure you change to the directory to which you cloned the repository on your local computer!!
