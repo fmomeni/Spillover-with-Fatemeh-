@@ -41,7 +41,7 @@ The "build_datasets" folder contains dofiles designed to build the data sets for
 
 "Variable_dictionary" contains explanations for the relevant variables used in the analysis.
 
-Finally, "parent_attendance" is a self-contained folder that analyses differential attendance at parent academy sessions between "parent academy" treatment in 2010 and 2011 and "prek" treatment in 2012 and 2013.
+Finally, "parent_academy_attendance" is a self-contained folder that analyses differential attendance at parent academy sessions between "parent academy" treatment in 2010 and 2011 and "prek" treatment in 2012 and 2013.
 
 
 
