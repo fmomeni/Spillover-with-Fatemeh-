@@ -1,0 +1,8 @@
+
+
+"Input" is empty and the user should fill this folder with the correct raw data on DropBox. 
+
+"Analysis" contains the dofiles for cleaning and generating number of neighbors by classroom exposure.
+
+"Output" is empty and will get filled once the "cleaning" do file is run with temporary data files. The final output however will be saved under the 
+"data_sets/generated".

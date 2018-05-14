@@ -1,3 +1,8 @@
+//CLEANING THE CHECC DATA SET FOR SUBSEQUENT ANALYSIS
+
+
+
+
 clear all
 
 cd "$repository/data_sets/pre_made"
@@ -28,9 +33,148 @@ foreach test in wjl wjs wja wjq card ppvt psra ospan same spatial cog ncog {
 
 
 ********************************************************************************
+*************Define Age Variables for Entry in Kindergarten and School**********
+********************************************************************************
+
+
+
+
+**Age Variable for School Entry
+
+foreach year in 2010 2011 2012 2013 2014 2015 2016 2017 2018 {
+
+gen age_begin_syear`year' = mofd(date("08/17/`year'", "MDY") - birthday)
+
+}
+
+
+
+foreach period in pre mid post sl {
+
+gen school_age_`period' = .
+
+	foreach year in 2010 2011 2012 2013 {
+	
+	replace school_age_`period' = age_begin_syear`year' if year == "`year'"
+
+	}
+	
+}
+
+
+foreach period in ao_y1 ao_y2 ao_y3 ao_y4 ao_y5 {
+
+gen school_age_`period' = .
+
+	foreach year in 2010 2011 2012 2013 {
+	
+	if "`period'" == "ao_y1" {
+	
+	local year1 = `year' + 1
+	replace school_age_`period' = age_begin_syear`year1' if year == "`year'"	
+	}
+	
+	else if "`period'" == "ao_y2" {
+	
+	local year2 = `year' + 2
+	replace school_age_`period' = age_begin_syear`year2' if year == "`year'"	
+	}
+	
+	else if "`period'" == "ao_y3" {
+	
+	local year3 = `year' + 3
+	replace school_age_`period' = age_begin_syear`year3' if year == "`year'"	
+	}
+	
+	else if "`period'" == "ao_y4" {
+	
+	local year4 = `year' + 4
+	replace school_age_`period' = age_begin_syear`year4' if year == "`year'"	
+	}
+	
+	else if "`period'" == "ao_y5" {
+	
+	local year5 = `year' + 5
+	replace school_age_`period' = age_begin_syear`year5' if year == "`year'"	
+	}
+	
+	}
+}
+
+**Age Variable for Kindergarten Entry
+
+foreach year in 2010 2011 2012 2013 2014 2015 2016 2017 2018 {
+
+gen age_begin_kyear`year' = mofd(date("09/01/`year'", "MDY") - birthday)
+
+}
+
+
+
+foreach period in pre mid post sl {
+
+gen kinder_age_`period' = .
+
+	foreach year in 2010 2011 2012 2013 {
+	
+	replace kinder_age_`period' = age_begin_kyear`year' if year == "`year'"
+
+	}
+	
+}
+
+
+foreach period in ao_y1 ao_y2 ao_y3 ao_y4 ao_y5 {
+
+gen kinder_age_`period' = .
+
+	foreach year in 2010 2011 2012 2013 {
+	
+	if "`period'" == "ao_y1" {
+	
+	local year1 = `year' + 1
+	replace kinder_age_`period' = age_begin_kyear`year1' if year == "`year'"	
+	}
+	
+	else if "`period'" == "ao_y2" {
+	
+	local year2 = `year' + 2
+	replace kinder_age_`period' = age_begin_kyear`year2' if year == "`year'"	
+	}
+	
+	else if "`period'" == "ao_y3" {
+	
+	local year3 = `year' + 3
+	replace kinder_age_`period' = age_begin_kyear`year3' if year == "`year'"	
+	}
+	
+	else if "`period'" == "ao_y4" {
+	
+	local year4 = `year' + 4
+	replace kinder_age_`period' = age_begin_kyear`year4' if year == "`year'"	
+	}
+	
+	else if "`period'" == "ao_y5" {
+	
+	local year5 = `year' + 5
+	replace kinder_age_`period' = age_begin_kyear`year5' if year == "`year'"	
+	}
+	
+	}
+}
+
+
+
+
+
+
+********************************************************************************
 *************Defining Multiple-Year Treatment Status****************************
 ********************************************************************************
 
+
+**Dropping all observations for kinderpreps in 2011
+drop if year == "2011" & treatment == "kinderprep"
 
 **Identifying the observations for mislabeled kids who were first in treatment
 **but then incorrectly labelled as "control" in second year of randomisation 
