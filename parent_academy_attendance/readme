@@ -1,6 +1,6 @@
 This is a self-contained folder containing the analysis of differential attendance at parent sessions between parent academy, cogX and kinderprep kids.
 
-"Input" contains the raw attendance data files. 
+"Input" is empty and the user should fill this folder with the correct raw data on DropBox. 
 
 "Analysis" contains the dofiles for cleaning and analysis.
 
