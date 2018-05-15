@@ -8,7 +8,7 @@ set more off
 
 
 //Change to the directory where the file "run_project.do" is located
-
+cd "C:\Users\fatemeh\Documents\GitHub\Spillover"
 
 //Path of Main Folder
 global repository `c(pwd)'
